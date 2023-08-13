@@ -1,30 +1,42 @@
 import React, { Suspense, useEffect, useState } from "react";
 import { Canvas } from "@react-three/fiber";
-import { OrbitControls, Preload, useGLTF } from "@react-three/drei";
+import { Sky, OrbitControls, Preload, useGLTF, Text } from "@react-three/drei";
+import Grass from "./Grass";
 
 import CanvasLoader from "../Loader";
-
+let time = 0;
 const Computers = ({ isMobile }) => {
-  const computer = useGLTF("./desktop_pc/scene.gltf");
+  const computer = useGLTF("./teapot/scene.gltf");
 
   return (
-    <mesh>
-      <hemisphereLight intensity={0.15} groundColor="black" />
+    <mesh position={[0, -3.5, 0]}>
       <spotLight
-        position={[-20, 50, 10]}
-        angle={0.12}
+        position={[10, 10, 5]}
+        angle={0.5}
         penumbra={1}
-        intensity={1}
+        intensity={5}
         castShadow
         shadow-mapSize={1024}
       />
       <pointLight intensity={1} />
+      <Text
+        castShadow
+        position={[0, 3.5, 0]}
+        scale={[1, 1, 1]}
+        color="White" // default
+        anchorX="center" // default
+        anchorY="middle" // default
+      >
+        Matthew McQuaigue
+      </Text>
       <primitive
+        castShadow
         object={computer.scene}
         scale={isMobile ? 0.7 : 0.75}
-        position={isMobile ? [0, -3, -2.2] : [0, -4.25, -1.5]}
+        position={isMobile ? [0, -3, -2.2] : [0, -0.25, 0.0]}
         rotation={[-0.01, -0.2, -0.1]}
       />
+      <Grass/>
     </mesh>
   );
 };
@@ -43,7 +55,6 @@ const ComputersCanvas = () => {
     const handleMediaQueryChange = (event) => {
       setIsMobile(event.matches);
     };
-
     // Add the callback function as a listener for changes to the media query
     mediaQuery.addEventListener("change", handleMediaQueryChange);
 
@@ -56,19 +67,27 @@ const ComputersCanvas = () => {
   return (
     <>
       {isMobile ? <></> : <Canvas
-        frameloop="demand"
         shadows
         dpr={[1, 2]}
-        camera={{ position: [20, 3, 5], fov: 25 }}
+        camera={{ position: [0, 5, 30], fov: 90 }}
         gl={{ preserveDrawingBuffer: true }}
       >
+      {
+        <Sky azimuth={1} inclination={0.6} distance={1000} />
+      }
         <Suspense fallback={<CanvasLoader />}>
           <OrbitControls
             enableZoom={false}
             maxPolarAngle={Math.PI / 2}
-            minPolarAngle={Math.PI / 2}
+            minPolarAngle={-Math.PI / 2}
           />
           <Computers isMobile={isMobile} />
+          {
+          // <mesh receiveShadow rotation={[-Math.PI / 2, 0, 0]} position={[0, -5.5, 0]} >
+          //   <planeGeometry args={[100, 100]} />
+          //   <meshLambertMaterial />
+          // </mesh>
+          }
         </Suspense>
         <Preload all />
       </Canvas>}
