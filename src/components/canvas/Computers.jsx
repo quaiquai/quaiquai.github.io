@@ -3,6 +3,7 @@ import { Canvas , useLoader } from "@react-three/fiber";
 import { Sky, OrbitControls, Preload, useGLTF, Text } from "@react-three/drei";
 import Grass from "./Grass";
 import { TextureLoader } from 'three/src/loaders/TextureLoader'
+import { profile_picture } from "../../assets";
 
 
 import CanvasLoader from "../Loader";
@@ -10,7 +11,7 @@ let time = 0;
 
 const Computers = ({ isMobile }) => {
   const computer = useGLTF("./teapot/scene.gltf");
-  const colorMap = useLoader(TextureLoader, 'src/assets/profile_picture.png')
+  const colorMap = useLoader(TextureLoader, profile_picture)
   return (
     <mesh position={[0, -3.5, 0]}>
       {/* <spotLight
