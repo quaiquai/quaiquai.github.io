@@ -3,7 +3,7 @@
   "private": true,
   "version": "0.0.0",
   "type": "module",
-  "homepage": "http://quaiquai.github.io",
+  "homepage": "http://quaiquai.github.io/quaiquai.github.io",
   "scripts": {
     "dev": "vite",
     "build": "vite build",
