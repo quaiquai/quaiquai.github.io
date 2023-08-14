@@ -24,7 +24,8 @@ export default function Grass({ options = { bW: 0.32, bH: 2, joints: 5 }, width 
     console.log(geo)
     for (let i = 0; i < geo.attributes.position.array.length-3; i+=3) {
       //const v = geo.vertices[i]
-      geo.attributes.position.array[i+1] = getYPosition(geo.attributes.position.array[i], geo.attributes.position.array[i+2])
+      // geo.attributes.position.array[i+1] = getYPosition(geo.attributes.position.array[i], geo.attributes.position.array[i+2])
+      geo.attributes.position.array[i+1] = 0.0;
     }
     geo.computeVertexNormals()
     return geo
@@ -68,7 +69,8 @@ function getAttributeData(instances, width) {
     //Offset of the roots
     const offsetX = Math.random() * width - width / 2
     const offsetZ = Math.random() * width - width / 2
-    const offsetY = getYPosition(offsetX, offsetZ)
+    const offsetY = 0.0;
+    // const offsetY = getYPosition(offsetX, offsetZ)
     offsets.push(offsetX, offsetY, offsetZ)
 
     //Define random growth directions

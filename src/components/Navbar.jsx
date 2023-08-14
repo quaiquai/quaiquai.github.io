@@ -69,13 +69,14 @@ const Navbar = () => {
           </p>
         </Link>
 
+        {/* navbar links to different pages i.e: about, contact etc   */}
         <ul className="list-none hidden sm:flex flex-row gap-10">
           {navLinks.map((nav) => (
             <li
               key={nav.id}
               className={`${
-                active === nav.id ? "text-white" : "text-secondary"
-              } hover:text-white text-[18px] font-medium cursor-pointer`}
+                "text-white"
+              } hover:underline hover:text-[25px] text-[18px] font-medium cursor-pointer`}
             >
               <a href={`/${nav.id}`}>{nav.title}</a>
             </li>

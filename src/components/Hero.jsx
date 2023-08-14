@@ -12,12 +12,12 @@ const Hero = () => {
          style={{zIndex:1}}
       >
 
-        <div className="flex flex-col justify-center items-center mt-5">
+        {/* <div className="flex flex-col justify-center items-center mt-5">
           <div className="w-5 h-5 rounded-full bg-[#915EFF]" />
           <div className="w-1 sm:h-80 h-40 violet-gradient" />
-        </div>
+        </div> */}
         {/*profile pic image*/}
-        <img src={profile_picture} alt="logo" className="w-30 h-80 flex-col justify-center items-center mt-5" style={{borderRadius: 400/ 2}}  />
+        {/* <img src={profile_picture} alt="logo" className="w-30 h-80 flex-col justify-center items-center mt-5" style={{borderRadius: 400/ 2}}  />
         <div>
           <h1 className={`${styles.heroHeadText} text-black`}>
             Hi, I'm <span className="text-[#915EFF]">Matthew McQuaigue</span>
@@ -26,7 +26,7 @@ const Hero = () => {
             I develop 3D visuals, user <br className="sm:block hidden" />
             interfaces and web applications
           </p>
-        </div>
+        </div> */}
       </div>
 
       <ComputersCanvas/>
