@@ -1,4 +1,4 @@
-import { BrowserRouter, Route, Routes } from "react-router-dom";
+import { BrowserRouter, HashRouter, Route, Routes } from "react-router-dom";
 
 import {
   About,
@@ -22,7 +22,7 @@ import {
 // </div>
 const App = () => {
   return (
-    <BrowserRouter>
+    <HashRouter>
       <div className="relative z-0 bg-primary">
         <div className="bg-hero-pattern bg-cover bg-no-repeat bg-center">
           <Navbar />
@@ -45,7 +45,7 @@ const App = () => {
           <Route path ="/about" element={<About />}></Route>
         </Routes>
       </div>
-    </BrowserRouter>
+    </HashRouter>
   );
 };
 
