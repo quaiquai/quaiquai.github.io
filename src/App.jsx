@@ -22,7 +22,7 @@ import {
 // </div>
 const App = () => {
   return (
-    <BrowserRouter>
+    
       <div className="relative z-0 bg-primary">
         <div className="bg-hero-pattern bg-cover bg-no-repeat bg-center">
           <Navbar />
@@ -41,11 +41,12 @@ const App = () => {
         // </div>
         }
         <Routes>
-          <Route path ="/" element={<Hero />}></Route>
+          
           <Route path ="/about" element={<About />}></Route>
+          <Route exact path ="/" element={<Hero />}></Route>
         </Routes>
       </div>
-    </BrowserRouter>
+    
   );
 };
 

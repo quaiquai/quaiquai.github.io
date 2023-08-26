@@ -78,7 +78,8 @@ const Navbar = () => {
                 "text-white"
               } hover:underline hover:text-[25px] text-[18px] font-medium cursor-pointer`}
             >
-              <a href={`/${nav.id}`}>{nav.title}</a>
+              {/* <a href={`/#${nav.id}`}>{nav.title}</a> */}
+              <Link to={`/${nav.id}`}>{nav.title}</Link>
             </li>
           ))}
         </ul>
