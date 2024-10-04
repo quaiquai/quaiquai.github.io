@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 
 import { styles } from "../styles";
 import { navLinks } from "../constants";
-import { logo, menu, close } from "../assets";
+import { logo, menu, close, axis_gizmo } from "../assets"; // images
 
 const Navbar = () => {
   const [active, setActive] = useState("");
@@ -55,6 +55,7 @@ const Navbar = () => {
       }`}
     >
       <div className="w-full flex justify-between items-center max-w-7xl mx-auto">
+        {/*home link from clicking logo and name*/}
         <Link
           to="/"
           className="flex items-center gap-2"
@@ -62,10 +63,9 @@ const Navbar = () => {
             window.scrollTo(0, 0);
           }}
         >
-          <img src={logo} alt="logo" className="w-9 h-9 object-contain" />
+          <img src={axis_gizmo} alt="logo" className="w-9 h-9 object-contain" />
           <p className="text-white text-[18px] font-bold cursor-pointer flex ">
-            Matthew &nbsp;
-            <span className="sm:block hidden"> | Graphics Portfolio</span>
+            Matthew McQuaigue &nbsp;
           </p>
         </Link>
 

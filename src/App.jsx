@@ -1,5 +1,5 @@
 import { BrowserRouter, HashRouter, Route, Routes } from "react-router-dom";
-
+import React, { useEffect, useState, useRef } from "react";
 import {
   About,
   Contact,
@@ -10,6 +10,8 @@ import {
   Tech,
   Works,
   StarsCanvas,
+  Publications,
+  Test,
 } from "./components";
 // <Experience />
 // <Tech />
@@ -21,6 +23,9 @@ import {
 //   <StarsCanvas />
 // </div>
 const App = () => {
+
+  const canvasRef = useRef();
+
   return (
     
       <div className="relative z-0 bg-primary">
@@ -41,7 +46,8 @@ const App = () => {
         // </div>
         }
         <Routes>
-          
+          <Route path="/test" element={<Test />}></Route>
+          <Route path="/publications" element={<Publications />}></Route>
           <Route path ="/about" element={<About />}></Route>
           <Route exact path ="/" element={<Hero />}></Route>
         </Routes>

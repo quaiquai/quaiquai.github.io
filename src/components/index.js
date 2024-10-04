@@ -8,6 +8,8 @@ import Works from "./Works";
 import Feedbacks from "./Feedbacks";
 import Contact from "./Contact";
 import CanvasLoader from "./Loader";
+import Publications from "./Publications";
+import Test from "./Test";
 
 
 export {
@@ -23,5 +25,7 @@ export {
   EarthCanvas, 
   BallCanvas, 
   ComputersCanvas, 
-  StarsCanvas
+  StarsCanvas,
+  Publications,
+  Test,
 };

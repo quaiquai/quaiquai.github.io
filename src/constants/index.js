@@ -23,6 +23,7 @@ import {
   jobit,
   tripguide,
   threejs,
+  paper,
 } from "../assets";
 
 export const navLinks = [
@@ -35,8 +36,8 @@ export const navLinks = [
     title: "Work",
   },
   {
-    id: "contact",
-    title: "Contact",
+    id: "publications",
+    title: "Publications",
   },
 ];
 
@@ -56,6 +57,77 @@ const services = [
   {
     title: "Graphics Rendering",
     icon: creator,
+  },
+];
+
+const publications = [
+  {
+    title: "An Engaging CS1 Curriculum Using BRIDGES",
+    icon: paper,
+  },
+  {
+    title: "CS-Materials: A system for classifying and analyzing pedagogical materials to improve adoption of parallel and distributed computing topics in early CS coursesn",
+    icon: paper,
+  },
+  {
+    title: "Classifying pedagogical material to improve adoption of parallel and distributed computing topics",
+    icon: paper,
+  },
+  {
+    title: "Visualization, assessment and analytics in data structures learning modules",
+    icon: paper,
+  },
+  {
+    title: "Mapping materials to curriculum standards for design, alignment, audit, and search",
+    icon: paper,
+  },
+  {
+    title: "Real-world assignments at scale to reinforce the importance of algorithms and complexity",
+    icon: paper,
+  },
+  {
+    title: "Engaging early programming students with modern assignments using bridges",
+    icon: paper,
+  },
+  {
+    title: "BRIDGES: Real world data, assignments and visualizations to engage and motivate CS majors",
+    icon: paper,
+  },
+  {
+    title: "Real-World Data, Interactive Games and Data Structure Visualizations in Early CS Courses Using BRIDGES",
+    icon: paper,
+  },
+  {
+    title: "Influence of Visual Field Congruence and Realism Through Global Illumination on Egocentric Depth Perception in Virtual and Augmented Environments",
+    icon: paper,
+  },
+  {
+    title: "Engaging CS1 Students with Audio Themed Assignments",
+    icon: paper,
+  },
+  {
+    title: "mpact of Background, Foreground, and Manipulated Object Rendering on Egocentric Depth Perception in Virtual and Augmented Indoor Environments",
+    icon: paper,
+  },
+  {
+    title: "Data-Driven Discovery of Anchor Points for PDC Content",
+    icon: paper,
+  },
+  {
+    title: "Location Based Assignments in Early CS Courses Using BRIDGES Engages Students",
+    icon: paper,
+  },
+  {
+    title: "Improving the Structure and Content of Early CS Courses with Well Aligned, Engaging Materials",
+    icon: paper,
+  },
+  {
+    title: "VISUALIZATION AND STRUCTURING OF BIBLIOGRAPHIC RECOMMENDATIONS",
+    icon: paper,
+  },
+  {
+    title: "Integrating Visualization, Assessment and Analytics in Data Structures Learning Modules",
+    icon: paper,
   },
 ];
 
@@ -262,4 +334,4 @@ const projects = [
   },
 ];
 
-export { services, technologies, experiences, testimonials, projects };
+export { services, technologies, experiences, testimonials, projects, publications };

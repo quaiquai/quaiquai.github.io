@@ -1,4 +1,5 @@
 import logo from "./logo.png";
+import axis_gizmo from "./axis_gizmo.png"
 import backend from "./backend.png";
 import creator from "./creator.png";
 import mobile from "./mobile.png";
@@ -32,6 +33,7 @@ import tripguide from "./tripguide.png";
 
 import profile_pic from './profile_pic.jpg';
 import profile_picture from './profile_picture.png';
+import paper from './paper.png';
 
 export {
   logo,
@@ -64,4 +66,6 @@ export {
   tripguide,
   profile_pic,
   profile_picture,
+  axis_gizmo,
+  paper,
 };
