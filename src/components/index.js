@@ -10,6 +10,8 @@ import Contact from "./Contact";
 import CanvasLoader from "./Loader";
 import Publications from "./Publications";
 import Test from "./Test";
+import ReactWebGPUTutorial from './ReactWebGPUTutorial';
+import ResourceView from './ResourceView';
 
 
 export {
@@ -27,5 +29,7 @@ export {
   ComputersCanvas, 
   StarsCanvas,
   Publications,
+  ReactWebGPUTutorial,
+  ResourceView,
   Test,
 };

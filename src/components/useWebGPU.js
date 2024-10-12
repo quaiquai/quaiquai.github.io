@@ -17,10 +17,10 @@ const useWebGPU = (canvas) => {
 
         //const preferredFormat = context.getPreferredFormat(adapter) //已废弃
         setFormat(gpu.getPreferredCanvasFormat()) // bgra8unorm
-
-    }, [canvas, adapter, gpu])
+        console.log("in useWEBGPU")
+    },[canvas, context, format, adapter, device]);
 
     return { canvas, context, format, adapter, device }
 }
 
-export default useWebGPU
+export {useWebGPU}

@@ -232,6 +232,10 @@ main {
   height: 100%;
 }
 
+.markdown > * {
+  all: revert;
+}
+
 .overlay {
   position: relative;
   order: 1;
