@@ -34,6 +34,9 @@ import tripguide from "./tripguide.png";
 import profile_pic from './profile_pic.jpg';
 import profile_picture from './profile_picture.png';
 import paper from './paper.png';
+import threed from './3d.png'
+import c from './c++.png'
+import researcher from './researcher.png'
 
 export {
   logo,
@@ -68,4 +71,7 @@ export {
   profile_picture,
   axis_gizmo,
   paper,
+  threed,
+  c,
+  researcher
 };

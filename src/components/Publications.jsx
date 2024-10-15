@@ -9,11 +9,11 @@ import { fadeIn, textVariant } from "../utils/motion";
 import { Button } from "@mui/material";
 
 
-const ServiceCard = ({ index, title, icon }) => (
-  <Tilt className="w-full">
+const ServiceCard = ({ index, title, description, icon }) => (
+  <Tilt className="w-full mt-10">
     <motion.div
       variants={fadeIn("right", "spring", index * 0.15, 0.75)}
-      className="w-full green-pink-gradient p-[2px] rounded-[2px] shadow-card"
+      className="w-full green-pink-gradient p-[2px] rounded-[20px] shadow-card"
     >
       <div
         options={{
@@ -21,7 +21,7 @@ const ServiceCard = ({ index, title, icon }) => (
           scale: 1,
           speed: 450,
         }}
-        className="bg-tertiary rounded-[25px] py-5 px-12 min-h-[100px] flow-root align-middle"
+        className="bg-primary rounded-[25px] py-5 px-12 min-h-[100px] flow-root align-middle"
       >
         
         <div className=" float-left">
@@ -35,6 +35,7 @@ const ServiceCard = ({ index, title, icon }) => (
         <h3 className="text-white text-[20px] px-12 font-bold text-center float-center">
           {title}
         </h3>
+        {/* {(description) ? <h3 className=" mt-5 text-slate-400 text-[15px] px-12 text-center float-right">{description}</h3> : <></>} */}
 
         {/* <h3 className="text-white text-[12px] px-12 font-bold text-left break-words max-w-lg min-w-[400px]">
           aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
@@ -47,9 +48,13 @@ const ServiceCard = ({ index, title, icon }) => (
 const Publication = () => {
   return (
     <>
-      <div className="mt-20 flex flex-wrap gap-5">
+      <div className="mt-2 flex flex-wrap gap-5">
+        <motion.div variants={textVariant()}>
+          <p className={styles.sectionSubText}>Matthew McQuaigue</p>
+          <h2 className={styles.sectionHeadText}>Publications.</h2>
+        </motion.div>
         {publications.map((service, index) => (
-          <ServiceCard key={service.title} index={index} {...service} />
+          <ServiceCard key={service.title} index={index} desc={service.description} {...service} />
         ))}
       </div>
     </>
