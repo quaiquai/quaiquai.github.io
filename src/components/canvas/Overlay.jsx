@@ -1,11 +1,14 @@
 import React from 'react'
 import { a } from '@react-spring/web'
+import {Tilt} from "react-tilt";
 
 export default function Overlay({ fill }) {
   // Just a Figma export, the fill is animated
   return (
+    <Tilt className="overlay">
     <div className="overlay">
-      <a.svg viewBox="50 0 683 720" fill={fill} xmlns="http://www.w3.org/2000/svg">
+      
+      <a.svg viewBox="40 0 780 620" fill={fill} xmlns="http://www.w3.org/2000/svg">
         <text fill="#E8B059" style={{ whiteSpace: 'pre' }} fontFamily="Inter" fontSize={48} fontWeight="bold" letterSpacing="0em">
           <tspan x={40} y={257.909} children={'Dr. Matthew McQuaigue \u2014'} />
         </text>
@@ -23,6 +26,8 @@ export default function Overlay({ fill }) {
           <tspan x={326} y={600.318} children=":)" />
         </text>
       </a.svg>
+      
     </div>
+    </Tilt>
   )
 }
