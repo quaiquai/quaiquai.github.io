@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import {Tilt} from "react-tilt";
 import { motion } from "framer-motion";
 
@@ -6,7 +6,6 @@ import { styles } from "../styles";
 import { publications } from "../constants";
 import { SectionWrapper } from "../hoc";
 import { fadeIn, textVariant } from "../utils/motion";
-import { Button } from "@mui/material";
 
 
 const ServiceCard = ({ index, title, description, icon }) => (
@@ -35,17 +34,26 @@ const ServiceCard = ({ index, title, description, icon }) => (
         <h3 className="text-white text-[20px] px-12 font-bold text-center float-center">
           {title}
         </h3>
-        {/* {(description) ? <h3 className=" mt-5 text-slate-400 text-[15px] px-12 text-center float-right">{description}</h3> : <></>} */}
+        {(description) ? <h3 className=" mt-5 text-slate-400 text-[15px] px-12 text-center float-right">{description}</h3> : <></>}
 
-        {/* <h3 className="text-white text-[12px] px-12 font-bold text-left break-words max-w-lg min-w-[400px]">
-          aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-        </h3> */}
       </div>
     </motion.div>
   </Tilt>
 );
 
 const Publication = () => {
+
+  const [papers, addPapers] = useState([]);
+
+  useEffect(() => {
+
+    let array1 = publications.map((service, index) => (
+      <ServiceCard key={service.title} index={index} desc={service.description} {...service} />
+    ))
+    addPapers(array1)
+
+  }, [papers])
+
   return (
     <>
       <div className="mt-2 flex flex-wrap gap-5">
@@ -53,9 +61,7 @@ const Publication = () => {
           <p className={styles.sectionSubText}>Matthew McQuaigue</p>
           <h2 className={styles.sectionHeadText}>Publications.</h2>
         </motion.div>
-        {publications.map((service, index) => (
-          <ServiceCard key={service.title} index={index} desc={service.description} {...service} />
-        ))}
+        {papers}
       </div>
     </>
   );
