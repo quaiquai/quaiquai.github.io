@@ -14,9 +14,18 @@ import { Prism as SyntaxHighlighter } from 'react-syntax-highlighter';
 import { atomDark } from 'react-syntax-highlighter/dist/esm/styles/prism';
 
 const blogPost =  `
+\documentclass[2pt]{article}
 # Implementing Photon Mapping with WebGPU: A Comprehensive Analysis
 
 ## Table of Contents
+
+$$
+\\begin{multicols}{2}
+Column 1
+\\columnbreak
+Column 2
+\\end{multicols}
+$$
 
 1. Introduction to Photon Mapping
 2. Mathematical Foundations
@@ -329,6 +338,13 @@ const vertWGSL = `
         
             const [isInitialized, setIsInitialized] = useState(false);
 
+            function tokenizeByHash(str) {
+                return str.split(/(#+)/); // Split by one or more # characters
+            }
+
+            let tokens = console.log(tokenizeByHash(PhotonMappingWriting))
+            console.log(tokens)
+
             const [count, setCount] = useState(0);
             useEffect(() => {
                 // This effect will only run when 'count' changes
@@ -511,9 +527,9 @@ const vertWGSL = `
    
                         <button onClick={() => setCount(count + 1)}>Increment</button>
                     </div>
-                    
+                    <Markdown className="markdown" >{PhotonMappingWriting}</Markdown >
                 </MathJaxContext>
-                <Markdown className="markdown" >{PhotonMappingWriting}</Markdown >
+                
                 </div>
             );
         };
