@@ -1,4 +1,4 @@
-import React, {useState } from "react";
+import React, {useState, useEffect } from "react";
 import {Tilt} from "react-tilt";
 import { motion } from "framer-motion";
 
@@ -8,10 +8,24 @@ import { SectionWrapper } from "../hoc";
 import { fadeIn, textVariant } from "../utils/motion";
 
 import { Prism as SyntaxHighlighter } from 'react-syntax-highlighter';
+import ReactMarkdown from "react-markdown"
 
 import { atomDark } from 'react-syntax-highlighter/dist/esm/styles/prism';
 const ReactWebGPUTutorial = () => {
  
+
+  const [markdownContent, setMarkdownContent] = useState('');
+
+  useEffect(() => {
+    const fetchData = async () => {
+      const response = await fetch('./src/writings/WebGPUReactTutorial.md');
+      console.log(response)
+      const text = await response.text();
+      setMarkdownContent(text);
+    };
+    
+    fetchData();
+  }, []);
   
   return (
     <>
@@ -76,6 +90,32 @@ const ReactWebGPUTutorial = () => {
       >
       This hook encapsulates the logic for setting up the WebGPU context and determining the preferred format for the canvas. It relies on another custom hook, useDevice, which we assume handles the creation of the WebGPU adapter and device.
       </motion.p>
+      <div className="markdown">
+      <ReactMarkdown
+        components={{
+          code({ className, children, ...rest }) {
+            const match = /language-(\w+)/.exec(className || "");
+            return match ? (
+              <SyntaxHighlighter
+                PreTag="div"
+                language={match[1]}
+                style={atomDark}
+                {...rest}
+              >
+                {children}
+              </SyntaxHighlighter>
+            ) : (
+              <code {...rest} className={className}>
+                {children}
+              </code>
+            );
+          },
+        }}
+      >
+        {markdownContent}
+      </ReactMarkdown>
+      </div>
+      
     </>
   );
 };
