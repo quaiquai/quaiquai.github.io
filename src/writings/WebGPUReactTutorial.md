@@ -10,7 +10,7 @@ a robust and efficient UI framework.
 
 To begin, we'll create custom hooks to manage WebGPU setup and canvas sizing. Here's an example of a useWebGPU hook:
 
-
+'''js
     import { useEffect, useState } from "react"
     import useDevice from "./useDevice"
 
@@ -34,7 +34,10 @@ To begin, we'll create custom hooks to manage WebGPU setup and canvas sizing. He
     }
 
 export { useWebGPU }
-# This hook encapsulates the logic for setting up the WebGPU context and determining the preferred format for 
+
+'''
+
+This hook encapsulates the logic for setting up the WebGPU context and determining the preferred format for 
 the canvas. It relies on another custom hook, useDevice, which we assume handles the creation of the WebGPU adapter and device.
 
 With our custom hooks in place, we can now set up WebGPU within a React component. Here's a basic structure:
@@ -43,22 +46,19 @@ With our custom hooks in place, we can now set up WebGPU within a React componen
     const WebGPUComponent = () => {
     const canvasRef = useRef(null);
     const { adapter, device, canvas, context, format } = useWebGPU(canvasRef.current);
-    useEffect(() => {
-    if (!canvas || !context || !adapter || !device) return;
 
-    // WebGPU initialization code here
-    const initializeWebGPU = () => {
-    // Create pipeline, bind groups, buffers, etc.
-    };
-
-    initializeWebGPU();
-
-    // Cleanup function
-    return () => {
-    // Cleanup WebGPU resources
-    };
-    }, [canvas, context, adapter, device, format]);
-
+    const initializeWebGPU = useCallback(() => {
+        //init webGPU stuff
+    }, [canvas, context, adapter, device, format])
+    
+    useEffect(()=>{
+        initializeWebGPU();
+    }, [initializeWebGPU])
+    
     return <canvas ref={canvasRef} width={800} height={600} />;
     };
     '''
+
+As you can see in the code block above, we are calling our custom hook to get instances of the adapter, device, canvas, and format. We want to init these items once and cache the function subsequent renders of the page so we use a useCallback function. Without useCallback, every time the component renders, the initializeWebGPU function would be recreated, which could lead to unnecessary re-renders or performance issues, especially if it is passed down as a prop to child components. This is then called in a useEffect hook. Here it is ensuring that initializeWebGPU is called when the component mounts or when the initializeWebGPU function changes.
+
+So what does the initializeWebGPU funtion look like? Well lets see: 
