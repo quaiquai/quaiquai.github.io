@@ -62,3 +62,73 @@ With our custom hooks in place, we can now set up WebGPU within a React componen
 As you can see in the code block above, we are calling our custom hook to get instances of the adapter, device, canvas, and format. We want to init these items once and cache the function subsequent renders of the page so we use a useCallback function. Without useCallback, every time the component renders, the initializeWebGPU function would be recreated, which could lead to unnecessary re-renders or performance issues, especially if it is passed down as a prop to child components. This is then called in a useEffect hook. Here it is ensuring that initializeWebGPU is called when the component mounts or when the initializeWebGPU function changes.
 
 So what does the initializeWebGPU funtion look like? Well lets see: 
+
+'''js
+if (!canvas || !context || !adapter || !device) return;
+'''
+
+First we start off by making sure the variables needed for webGPU have been created and are not undefined. Next we begin setting upt uniform buffers and bind groups:
+
+'''js
+const uniformBufferSize = //some size
+const uniformBuffer = device.createBuffer({
+    size: uniformBufferSize,
+    usage: GPUBufferUsage.UNIFORM | GPUBufferUsage.COPY_DST
+});
+
+const uniformBindGroupLayout = device.createBindGroupLayout({
+    entries: [
+        { binding: 0, visibility: GPUShaderStage.FRAGMENT, buffer: { type: "uniform" } }
+    ]
+});
+
+const uniformBindGroup = device.createBindGroup({
+    layout: uniformBindGroupLayout,
+    entries: [
+        { binding: 0, resource: { buffer: uniformBuffer } }
+    ]
+});
+
+'''
+
+We can then config the canvas:
+
+'''js
+const canvasConfig = {
+    device,
+    format,
+    alphaMode: 'opaque'
+};
+context.configure(canvasConfig);
+'''
+
+We then create the pipeline and the render pass descriptor:
+
+'''js
+const pipeline = device.createRenderPipeline({
+    layout: device.createPipelineLayout({ bindGroupLayouts: [uniformBindGroupLayout] }),
+    vertex: {
+        module: device.createShaderModule({ code: vertWGSL }),
+        entryPoint: 'main'
+    },
+    fragment: {
+        module: device.createShaderModule({ code: fragWGSL }),
+        entryPoint: 'main',
+        targets: [{ format: navigator.gpu.getPreferredCanvasFormat() }]
+    },
+    primitive: {
+        topology: 'triangle-strip',
+        frontFace: "ccw",
+        stripIndexFormat: 'uint32'
+    }
+});
+
+const renderPassDescriptor = { 
+    colorAttachments: [{    
+        view: undefined,
+        loadOp: "clear",
+        clearValue: { r: 0.0, g: 0.0, b: 0.0, a: 1.0 },
+        storeOp: 'store'
+    }]
+};
+'''
