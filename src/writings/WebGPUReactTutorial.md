@@ -14,7 +14,7 @@ npm install better-react-mathjax framer-motion react-markdown react-syntax-highl
 
 The script consists of several parts, including imports, shader code, the main React component, and functions to manage WebGPU setup and rendering. Let’s break it down.
 
-## Imports and Component Setup
+# Imports and Component Setup
 
 The script begins by importing essential libraries and hooks:
 

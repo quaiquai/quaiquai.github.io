@@ -110,11 +110,16 @@ const ReactWebGPUTutorial = () => {
               </code>
             );
           },
+          h1({className, children, ...rest}) {
+            let heading = (<h2 {...rest} className={styles.sectionHeadText}>{children}</h2>)
+            return heading
+          }
         }}
       >
         {markdownContent}
       </ReactMarkdown>
       </div>
+      {/* <embed src="./src/components/MMcQuaigue_CV.pdf" width="100%" height="5000"></embed> */}
       
     </>
   );
