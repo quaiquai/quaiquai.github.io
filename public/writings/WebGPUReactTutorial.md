@@ -1,4 +1,3 @@
-# Running WebGPU in React: A Detailed Breakdown
 
 WebGPU is an emerging technology that allows for high-performance graphics rendering directly in the browser. In this blog post, we’ll explore how to implement WebGPU in a React application using a script that simulates photon mapping. We'll break down the code step by step, focusing on the key concepts and functions that make this possible.
 
@@ -23,11 +22,14 @@ import React, { useEffect, useState, useRef, useCallback } from "react";
 
 import { useWebGPU } from "./useWebGPU"; // Custom hook for WebGPU setup
 import useCanvasSize from "./useCanvasSize"; // Custom hook for responsive canvas
-
 ```
 
-React Hooks: We use hooks like useEffect, useState, useRef, and useCallback to manage component state, side effects, and references.
-Custom Hooks: useWebGPU handles WebGPU initialization, while useCanvasSize manages the canvas's dimensions, ensuring it’s responsive.
+$$
+\omega_o
+$$
+
+- React Hooks: We use hooks like useEffect, useState, useRef, and useCallback to manage component state side effects, and references.
+- Custom Hooks: useWebGPU handles WebGPU initialization, while useCanvasSize manages the canvas's dimensions, ensuring it’s responsive.
 
 ## WebGPU Shader Code
 
@@ -98,8 +100,8 @@ const initializeWebGPU = useCallback(() => {
 
 ```
 
-    useCallback: This hook memoizes the initializeWebGPU function, ensuring it doesn’t get recreated on every render. This is particularly useful when passing the function as a dependency to other hooks.
-    Buffer Creation: The uniform buffer is essential for passing data (like camera angles) to shaders. The usage property specifies that the buffer will be used for uniforms and can be copied to the GPU.
+useCallback: This hook memoizes the initializeWebGPU function, ensuring it doesn’t get recreated on every render. This is particularly useful when passing the function as a dependency to other hooks.
+Buffer Creation: The uniform buffer is essential for passing data (like camera angles) to shaders. The usage property specifies that the buffer will be used for uniforms and can be copied to the GPU.
 
 # Render Loop
 
@@ -126,8 +128,8 @@ const render = useCallback(() => {
 
 ```
 
-    Command Encoding: This method manages the rendering commands sent to the GPU. It begins a render pass, sets the pipeline and bind groups, and issues a draw call.
-    Dependencies: By including dependencies like context, device, and isInitialized, we ensure that the function re-runs whenever any of these values change, maintaining the latest references and state.
+Command Encoding: This method manages the rendering commands sent to the GPU. It begins a render pass, sets the pipeline and bind groups, and issues a draw call.
+Dependencies: By including dependencies like context, device, and isInitialized, we ensure that the function re-runs whenever any of these values change, maintaining the latest references and state.
 
 # Animation and Interaction
 
@@ -146,8 +148,6 @@ const handleMouseMove = useCallback((e) => {
 
 Mouse Interaction: These handlers adjust camera rotation based on mouse input, creating an interactive experience. By using useCallback, we ensure these functions maintain the same reference across renders unless their dependencies change.
 
-
-
 # Displaying Content
 
 Finally, the component renders the canvas and additional content:
@@ -161,6 +161,5 @@ return (
 );
 
 ```
-
 
 Canvas Element: The canvas is where the WebGPU renders the graphics. The tabIndex attribute makes it focusable, allowing for keyboard events.

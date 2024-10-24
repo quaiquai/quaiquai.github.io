@@ -17,7 +17,7 @@ const ResouceView = () => {
     const [markdownContent, setMarkdownContent] = useState('');
 
   useEffect(() => {
-    fetch('src/writings/Resouces.md')
+    fetch('/writings/Resouces.md')
       .then(response => response.text())
       .then(text => setMarkdownContent(text))
       .catch(error => console.error('Error fetching Markdown:', error));

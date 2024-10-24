@@ -7,7 +7,7 @@ import Markdown from 'react-markdown';
 import { motion } from "framer-motion";
 import { fadeIn, textVariant } from "../utils/motion";
 import { MathJaxContext, MathJax } from "better-react-mathjax";
-import PhotonMappingWriting from "../writings/PhotonMappingWriting";
+import PhotonMappingWriting from "../../public/writings/PhotonMappingWriting";
 import '../markdown.css'
 import { Prism as SyntaxHighlighter } from 'react-syntax-highlighter';
 
