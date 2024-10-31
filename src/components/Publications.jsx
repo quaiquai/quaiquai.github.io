@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, Suspense } from "react";
 import {Tilt} from "react-tilt";
 import { motion } from "framer-motion";
 
@@ -6,6 +6,7 @@ import { styles } from "../styles";
 import { publications } from "../constants";
 import { SectionWrapper } from "../hoc";
 import { fadeIn, textVariant } from "../utils/motion";
+import { staggerContainer } from "../utils/motion";
 
 
 const ServiceCard = ({ index, title, description, icon }) => (
@@ -44,18 +45,22 @@ const ServiceCard = ({ index, title, description, icon }) => (
 const Publication = () => {
 
   const [papers, addPapers] = useState([]);
+  let array1 = []
 
   useEffect(() => {
 
-    let array1 = publications.map((service, index) => (
+    array1 = publications.map((service, index) => (
       <ServiceCard key={service.title} index={index} desc={service.description} {...service} />
     ))
+    
     addPapers(array1)
 
-  }, [papers])
+  }, [])
 
   return (
-    <>
+    
+    <motion.section variants={staggerContainer()} className={`${styles.padding} max-w-7xl mx-auto relative z-0`} initial='hidden'
+    whileInView='show'>
       <div className="mt-2 flex flex-wrap gap-5">
         <motion.div variants={textVariant()}>
           <p className={styles.sectionSubText}>Matthew McQuaigue</p>
@@ -63,8 +68,8 @@ const Publication = () => {
         </motion.div>
         {papers}
       </div>
-    </>
+    </motion.section>
   );
 };
 
-export default SectionWrapper(Publication, "publication");
+export default Publication;
