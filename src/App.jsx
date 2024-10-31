@@ -2,7 +2,6 @@ import { BrowserRouter, HashRouter, Route, Routes } from "react-router-dom";
 import React, { useEffect, useState, useRef } from "react";
 import {
   About,
-  Contact,
   Experience,
   Feedbacks,
   Hero,
