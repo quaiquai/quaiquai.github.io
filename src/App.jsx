@@ -49,10 +49,10 @@ const App = () => {
         <Routes>
           <Route path="/test" element={<Test />}></Route>
           <Route path="/publications" element={<Publications />}></Route>
-          <Route path ="/about" element={<About />}></Route>
-          <Route path ="/resources" element={<ResourceView />}></Route>
-          <Route exact path ="/" element={<Hero />}></Route>
-          <Route exact path ="/tut" element={<ReactWebGPUTutorial />}></Route>
+          <Route path="/about" element={<About />}></Route>
+          <Route path="/resources" element={<ResourceView />}></Route>
+          <Route exact path="/" element={<Hero />}></Route>
+          <Route exact path="/tut" element={<ReactWebGPUTutorial />}></Route>
         </Routes>
       </div>
     

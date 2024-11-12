@@ -42,6 +42,10 @@ export const navLinks = [
     id: "resources",
     title: "Graphics Resources",
   },
+  {
+    id: "tut",
+    title: "WebGPU With React Tutorial"
+  }
 ];
 
 const services = [
