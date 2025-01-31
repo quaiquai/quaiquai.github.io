@@ -11,6 +11,7 @@ import Publications from "./Publications";
 import Test from "./Test";
 import ReactWebGPUTutorial from './ReactWebGPUTutorial';
 import ResourceView from './ResourceView';
+import BlogsList from './Blogs';
 
 
 export {
@@ -29,4 +30,5 @@ export {
   ReactWebGPUTutorial,
   ResourceView,
   Test,
+  BlogsList,
 };

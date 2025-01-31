@@ -13,6 +13,7 @@ import {
   ReactWebGPUTutorial,
   ResourceView,
   Test,
+  BlogsList
 } from "./components";
 // <Experience />
 // <Tech />
@@ -53,6 +54,7 @@ const App = () => {
           <Route path="/resources" element={<ResourceView />}></Route>
           <Route exact path="/" element={<Hero />}></Route>
           <Route exact path="/tut" element={<ReactWebGPUTutorial />}></Route>
+          <Route exact path="/blogs" element={<BlogsList/>}></Route>
         </Routes>
       </div>
     

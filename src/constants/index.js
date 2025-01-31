@@ -43,8 +43,8 @@ export const navLinks = [
     title: "Graphics Resources",
   },
   {
-    id: "tut",
-    title: "WebGPU With React Tutorial"
+    id: "blogs",
+    title: "Articles"
   }
 ];
 
@@ -353,4 +353,11 @@ const projects = [
   },
 ];
 
-export { services, technologies, experiences, testimonials, projects, publications };
+const blogs = [
+  {
+    title: "WebGPUReactTutorial",
+    path: "/writings/WebGPUReactTutorial.md"
+  }
+]
+
+export { services, technologies, experiences, testimonials, projects, publications, blogs };
