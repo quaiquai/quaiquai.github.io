@@ -10,7 +10,7 @@ const fragWGSL = `
     const MAX_BOUNCES = 1u;
     const NUM_PHOTONS = 100u;
     const SPHERE_RADIUS = 4.0;
-    const SPHERE_CENTER = vec3<f32>(0.0, 0.0, -4.0);
+    const SPHERE_CENTER = vec3<f32>(0.0, 0.0, 0.0);
     const LIGHT_POSITION = vec3<f32>(5.0, -50.0, 0.0);
 
     fn randomFloat(seed: u32) -> f32 {
@@ -125,15 +125,15 @@ const fragWGSL = `
         return photons;
     }
 
-    fn rotateVector(angleX: f32, angleY: f32) -> vec3<f32> {
+    fn rotateVector(angleX: f32, angleY: f32, cameraPos: vec3f) -> vec3<f32> {
         let cosX = cos(angleX);
         let sinX = sin(angleX);
         let cosY = cos(angleY);
         let sinY = sin(angleY);
 
-        let x = 50.0 * cosY * sinX;
-        let y = 50.0 * sinY;
-        var z = 50.0 * cosY * cosX;
+        let x = sinX * sinY * 10.0;
+        let y = cosY * 10.0;
+        var z = cosX * sinY * 10.0;
 
         return vec3<f32>(x, y, z);
 
@@ -154,31 +154,23 @@ const fragWGSL = `
         var aspectRatio = 800.0 / 450.0;
         uv.y /= aspectRatio;
 
-        let targetPos = vec3<f32>(0.0, 0.0, -20.0);
+        let targetPos = vec3<f32>(0.0, 0.0, 0.0);
 
-        let initialCameraPos = vec3<f32>(0.0, 0.0, 5.0);
+        let initialCameraPos = vec3<f32>(0.0, 0.0, -5.0);
         var cameraDistance = tan((60.0 * 0.5) * 3.14 / 180.0);
-        var camPos = normalize(rotateVector(uniforms.cameraRotationX, uniforms.cameraRotationY) * aspectRatio);
+        var camPos = rotateVector(uniforms.cameraRotationX, uniforms.cameraRotationY, initialCameraPos);
         var front = normalize(targetPos - camPos);
         var rayDir = vec3<f32>(uv, cameraDistance);
         var right = normalize(cross(front, vec3f(0.0, 1.0, 0.0)));
         var up = normalize(cross(right, front));
         rayDir = normalize(mat3x3f(right, up, front) * rayDir);
         var t = intersectSphere(camPos, rayDir);
-        var q = intersectRect(rayDir, initialCameraPos, vec3<f32>(-1.0, 0.0, 1.0),  vec3<f32>(-1.0, 0.0, -10.0),  vec3<f32>(1.0, 0.0, -10.0),  vec3<f32>(1.0, 0.0, 1.0));
-        var object = 1.0;
-        if(q < t && q >= 0.0){
-            t = q;
-            object = 0.0;
-        }
+        // var q = intersectRect(rayDir, camPos, vec3<f32>(-1.0, 0.0, 1.0),  vec3<f32>(-1.0, 0.0, -10.0),  vec3<f32>(1.0, 0.0, -10.0),  vec3<f32>(1.0, 0.0, 1.0));
+        
 
         if (t > 0.0) {
-            let hitPoint = initialCameraPos + rayDir * t;
+            let hitPoint = camPos + rayDir * t;
             var normal = normalize(hitPoint - SPHERE_CENTER);
-            if(object == 0.0){
-                let x = vec3<f32>(0.0, 1.0, 0.0);
-                var normal = normalize(x);
-            }
             
             let photons = generatePhotons();
             
