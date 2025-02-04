@@ -178,8 +178,8 @@ const Test = () => {
         const deltaY = e.clientY - lastMousePositionRef.current.y;
 
         cameraRotationRef.current = {
-            x: cameraRotationRef.current.x + deltaY * 0.005,
-            y: cameraRotationRef.current.y + deltaX * 0.005
+            x: cameraRotationRef.current.x + deltaX * 0.005,
+            y: cameraRotationRef.current.y + deltaY * 0.005
         };
 
         lastMousePositionRef.current = { x: e.clientX, y: e.clientY };

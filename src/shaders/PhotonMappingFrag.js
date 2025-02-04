@@ -125,19 +125,25 @@ const fragWGSL = `
         return photons;
     }
 
-    fn rotateVector(v: vec3<f32>, angleX: f32, angleY: f32) -> vec3<f32> {
+    fn rotateVector(angleX: f32, angleY: f32) -> vec3<f32> {
         let cosX = cos(angleX);
         let sinX = sin(angleX);
         let cosY = cos(angleY);
         let sinY = sin(angleY);
 
-        var rotated = vec3<f32>(
-            v.x * cos(angleY) * cos(angleX),
-            v.y * sin(angleX),
-            v.z * sin(angleY) * cos(angleX)
-        );
+        let x = 50.0 * cosY * sinX;
+        let y = 50.0 * sinY;
+        var z = 50.0 * cosY * cosX;
 
-        return rotated;
+        return vec3<f32>(x, y, z);
+
+        // var rotated = vec3<f32>(
+            //  cos(angleX) * cos(angleY),
+            //  sin(angleY),
+            // sin(angleX) * cos(angleY)
+        // );
+
+        // return rotated;
     }
 
 
@@ -148,14 +154,17 @@ const fragWGSL = `
         var aspectRatio = 800.0 / 450.0;
         uv.y /= aspectRatio;
 
-        let initialCameraPos = vec3<f32>(0.0, 0.0, 1.0);
-        var cameraDistance = tan(10.0 * 0.5 * 3.14 / 180.0);
-        
+        let targetPos = vec3<f32>(0.0, 0.0, -20.0);
+
+        let initialCameraPos = vec3<f32>(0.0, 0.0, 5.0);
+        var cameraDistance = tan((60.0 * 0.5) * 3.14 / 180.0);
+        var camPos = normalize(rotateVector(uniforms.cameraRotationX, uniforms.cameraRotationY) * aspectRatio);
+        var front = normalize(targetPos - camPos);
         var rayDir = vec3<f32>(uv, cameraDistance);
-        rayDir = normalize(mat3x3f(vec3f(1.0, 0.0, 0.0), vec3f(0.0, 1.0, 0.0), vec3f(0.0, 0.0, -1.0)) * rayDir);
-        // let rayDir = normalize(rotateVector(vec3<f32>(uv, 1.0), uniforms.cameraRotationX, uniforms.cameraRotationY));
-        // let cameraPos = rotateVector(initialCameraPos, uniforms.cameraRotationX, uniforms.cameraRotationY);
-        var t = intersectSphere(initialCameraPos, rayDir);
+        var right = normalize(cross(front, vec3f(0.0, 1.0, 0.0)));
+        var up = normalize(cross(right, front));
+        rayDir = normalize(mat3x3f(right, up, front) * rayDir);
+        var t = intersectSphere(camPos, rayDir);
         var q = intersectRect(rayDir, initialCameraPos, vec3<f32>(-1.0, 0.0, 1.0),  vec3<f32>(-1.0, 0.0, -10.0),  vec3<f32>(1.0, 0.0, -10.0),  vec3<f32>(1.0, 0.0, 1.0));
         var object = 1.0;
         if(q < t && q >= 0.0){
