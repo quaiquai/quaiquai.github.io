@@ -182,7 +182,7 @@ const fragWGSL = `
             }
             
             illumination /= f32(NUM_PHOTONS);
-            illumination = clamp(illumination * 5.0, 0.0, 1.0);
+            illumination = clamp(illumination, 0.0, 1.0);
             
             let lightDir = normalize(LIGHT_POSITION - hitPoint);
             let directIllumination = max(dot(normal, lightDir), 0.0);

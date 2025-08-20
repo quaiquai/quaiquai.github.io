@@ -356,7 +356,12 @@ const projects = [
 const blogs = [
   {
     title: "WebGPUReactTutorial",
-    path: "/writings/WebGPUReactTutorial.md"
+    path: "#/tut",
+    icon: "./logo.png"
+  },
+  {
+    title: "Test",
+    path: ""
   }
 ]
 
