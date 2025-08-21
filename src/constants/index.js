@@ -42,9 +42,13 @@ export const navLinks = [
     id: "resources",
     title: "Graphics Resources",
   },
+  // {
+  //   id: "blogs",
+  //   title: "Articles"
+  // },
   {
-    id: "blogs",
-    title: "Articles"
+    id: "wgpu",
+    title: "WebGPU Samples"
   }
 ];
 

@@ -11,12 +11,6 @@ npm install better-react-mathjax framer-motion react-markdown react-syntax-highl
 
 # Code Structure Overview
 
-<!-- ![image](../logo.png) -->
-
-$$
-\nabla \cdot \vec{E} = \frac{\rho}{\epsilon_0}
-$$
-
 The script consists of several parts, including imports, shader code, the main React component, and functions to manage WebGPU setup and rendering. Let’s break it down.
 
 # Imports and Component Setup

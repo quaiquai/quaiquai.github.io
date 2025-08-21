@@ -13,7 +13,7 @@ const ServiceCard = ({ index, title, desc, icon }) => (
       <motion.div
         onClick={() => window.location.href = desc} 
         variants={fadeIn("right", "spring", index * 0.15, 0.75)}
-        className="w-full green-pink-gradient p-[2px] rounded-[20px] shadow-card"
+        className="w-full max-w-[400px] h-full green-pink-gradient p-[2px] rounded-[20px] shadow-card"
       >
         <div
           options={{
@@ -21,12 +21,12 @@ const ServiceCard = ({ index, title, desc, icon }) => (
             scale: 1,
             speed: 450,
           }}
-          className="bg-primary rounded-[25px] py-5 px-12 min-h-[100px] flow-root align-middle"
+          className="bg-primary rounded-[25px] h-full py-5 px-12 flow-root align-middle"
         >
           
           
   
-          <h3 className="text-white text-[20px] font-bold text-center float-center">
+          <h3 className="text-white text-[20px] font-bold text-center break-words">
             {title}
           </h3>
           <div className="flex justify-center mt-4">
@@ -47,7 +47,7 @@ const BlogsList= () => {
 
     return (
 
-        <motion.section variants={staggerContainer()} className={`${styles.padding} max-w-lg mx-auto relative z-0`} initial='hidden'
+        <motion.section variants={staggerContainer()} className={`${styles.padding}  mx-auto relative z-0 grid gap-8 sm:grid-cols-2 md:grid-cols-5`} initial='hidden'
             whileInView='show'>
             {
             blogs.map((service, index) => (

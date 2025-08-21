@@ -6,24 +6,15 @@ import {
   Feedbacks,
   Hero,
   Navbar,
-  Tech,
   Works,
   StarsCanvas,
   Publications,
   ReactWebGPUTutorial,
   ResourceView,
-  Test,
+  // Test,
   BlogsList
 } from "./components";
-// <Experience />
-// <Tech />
-// <Works />
-// <Feedbacks />
 
-// <div className="relative z-0">
-//   <Contact />
-//   <StarsCanvas />
-// </div>
 const App = () => {
 
   const canvasRef = useRef();
@@ -48,13 +39,14 @@ const App = () => {
         // </div>
         }
         <Routes>
-          <Route path="/test" element={<Test />}></Route>
+          {/* <Route path="/test" element={<Test />}></Route> */}
           <Route path="/publications" element={<Publications />}></Route>
           <Route path="/about" element={<About />}></Route>
           <Route path="/resources" element={<ResourceView />}></Route>
           <Route exact path="/" element={<Hero />}></Route>
           <Route exact path="/tut" element={<ReactWebGPUTutorial />}></Route>
           <Route exact path="/blogs" element={<BlogsList/>}></Route>
+          <Route exact path="/wgpu" ></Route>
         </Routes>
       </div>
     
