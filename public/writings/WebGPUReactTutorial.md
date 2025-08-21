@@ -13,6 +13,10 @@ npm install better-react-mathjax framer-motion react-markdown react-syntax-highl
 
 <!-- ![image](../logo.png) -->
 
+$$
+\nabla \cdot \vec{E} = \frac{\rho}{\epsilon_0}
+$$
+
 The script consists of several parts, including imports, shader code, the main React component, and functions to manage WebGPU setup and rendering. Let’s break it down.
 
 # Imports and Component Setup
@@ -26,10 +30,6 @@ import { useWebGPU } from "./useWebGPU"; // Custom hook for WebGPU setup
 import useCanvasSize from "./useCanvasSize"; // Custom hook for responsive canvas
 ```
 
-$$
-\omega_o
-$$
-
 - React Hooks: We use hooks like useEffect, useState, useRef, and useCallback to manage component state side effects, and references.
 - Custom Hooks: useWebGPU handles WebGPU initialization, while useCanvasSize manages the canvas's dimensions, ensuring it’s responsive.
 
@@ -40,17 +40,18 @@ Vertex Shader
 
 The vertex shader defines the position and UV coordinates for each vertex:
 
-```wgsl
+```glsl
 struct VSOut {
     @builtin(position) Position: vec4<f32>,
     @location(0)       uvs     : vec2<f32>
-}; -->
+};
 
-<!-- @vertex
+@vertex
 fn main(@builtin(vertex_index) VertexIndex : u32) -> VSOut {
     ...
 }
 ```
+
 
 Purpose: This shader computes the positions of a square and maps UV coordinates for texturing. The use of @builtin(position) ensures the shader outputs the correct vertex position.
 
@@ -58,7 +59,7 @@ Fragment Shader
 
 The fragment shader contains the core logic for rendering the photon mapping effect. It calculates the intersection of rays with a sphere and generates light information:
 
-```wgsl
+```glsl
 @fragment
 fn main(@location(0) coords: vec2<f32>) -> @location(0) vec4<f32> {
     ...

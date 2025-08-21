@@ -1,7 +1,7 @@
 import React from 'react'
 import { Suspense } from 'react';
 import { Canvas,  useLoader } from '@react-three/fiber'
-import { OrbitControls } from '@react-three/drei'
+import { Environment, OrbitControls } from '@react-three/drei'
 import { useSpring } from '@react-spring/core'
 import { a } from '@react-spring/web'
 import Overlay from './Overlay'

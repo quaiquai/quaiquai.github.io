@@ -44,8 +44,8 @@ export default function Scene({ setBg }) {
       coat: mode && !hovered ? .04 : 1,
       ambient: mode && !hovered ? 1.5 : 0.5,
       env: mode && !hovered ? 0.4 : 1,
-      color: hovered ? '#E8B059' : mode ? '#202020' : 'grey',
-      config: (n) => n === 'wobble' && hovered && { mass: 2, tension: 1000, friction: 10 }
+      color: hovered ? '#E8B059' : mode ? '#636262ff' : '#202020',
+      config: (n) => n === 'wobble' && hovered && { mass: 2, tension: 2000, friction: 10 }
     },
     [mode, hovered, down]
   )
@@ -66,10 +66,10 @@ export default function Scene({ setBg }) {
           onPointerUp={() => {
             setDown(false)
             setMode(!mode)
-            //setBg({ background: !mode ? '#202020' : '#f0f0f0', fill: !mode ? '#f0f0f0' : '#202020' })
+            setBg({ background: !mode ? '#202020' : '#f0f0f0', fill: !mode ? '#f0f0f0' : '#202020' })
           }}>
           <primitive object={new TeapotGeometry(1.0, 8)} />
-          <AnimatedMaterial color={color} envMapIntensity={env} clearcoat={coat} clearcoatRoughness={0} metalness={0.1} />
+          <AnimatedMaterial color={color} envMapIntensity={env} clearcoat={coat} clearcoatRoughness={0} metalness={1.0} />
         </a.mesh>
         <Environment preset="warehouse" />
         <ContactShadows

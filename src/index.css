@@ -246,8 +246,21 @@ main {
 }
 
 svg {
-  width: 100%;
-  height: 100%;
+  display: flex;
+  /* flex: 1; */
+  /* width: 20%;
+  height: 20%; */
+  align-items: center;
+  justify-items: center;
+
+}
+
+
+mjx-container[jax="SVG"][display="true"] {
+    display: flex !important;
+    text-align: center;
+    justify-content: center;
+    margin: 1em 0;
 }
 
 
