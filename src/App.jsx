@@ -14,6 +14,8 @@ import {
   // Test,
   BlogsList
 } from "./components";
+import SpinningCube from "./wgpu/samples/simpleCube";
+import PathTraceSphere from "./wgpu/samples/path-tracing/trace";
 
 const App = () => {
 
@@ -46,7 +48,7 @@ const App = () => {
           <Route exact path="/" element={<Hero />}></Route>
           <Route exact path="/tut" element={<ReactWebGPUTutorial />}></Route>
           <Route exact path="/blogs" element={<BlogsList/>}></Route>
-          <Route exact path="/wgpu" ></Route>
+          <Route exact path="/wgpu" element={<PathTraceSphere></PathTraceSphere>}></Route>
         </Routes>
       </div>
     
