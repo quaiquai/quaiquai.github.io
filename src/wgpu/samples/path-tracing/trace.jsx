@@ -83,6 +83,98 @@ export default function PathTraceSphere() {
         return Hit(true, t, pos, normal);
       }
 
+      fn scalarTriple(a: vec3<f32>, b: vec3<f32>, c: vec3<f32>) -> f32 {
+            return dot(a, cross(b, c));
+        }
+
+        fn testQuadTrace(
+            rayPos: vec3<f32>,
+            rayDir: vec3<f32>,
+            a_in: vec3<f32>,
+            b_in: vec3<f32>,
+            c_in: vec3<f32>,
+            d_in: vec3<f32>,
+            info: ptr<function, Hit>
+        ) -> bool {
+            var a = a_in;
+            var b = b_in;
+            var c = c_in;
+            var d = d_in;
+
+            // calculate normal and flip vertices order if needed
+            var normal = normalize(cross(c - a, c - b));
+            if (dot(normal, rayDir) > 0.0) {
+                normal = -normal;
+
+                var temp = d;
+                d = a;
+                a = temp;
+
+                temp = b;
+                b = c;
+                c = temp;
+            }
+
+            let p = rayPos;
+            let q = rayPos + rayDir;
+            let pq = q - p;
+            let pa = a - p;
+            let pb = b - p;
+            let pc = c - p;
+
+            // determine which triangle to test against by testing against diagonal first
+            let m = cross(pc, pq);
+            var v = dot(pa, m);
+            var intersectPos = vec3<f32>(0.0);
+
+            if (v >= 0.0) {
+                // test against triangle a,b,c
+                var u = -dot(pb, m);
+                if (u < 0.0) { return false; }
+                var w = scalarTriple(pq, pb, pa);
+                if (w < 0.0) { return false; }
+                let denom = 1.0 / (u + v + w);
+                u *= denom;
+                v *= denom;
+                w *= denom;
+                intersectPos = u * a + v * b + w * c;
+            } else {
+                let pd = d - p;
+                var u = dot(pd, m);
+                if (u < 0.0) { return false; }
+                var w = scalarTriple(pq, pa, pd);
+                if (w < 0.0) { return false; }
+                v = -v;
+                let denom = 1.0 / (u + v + w);
+                u *= denom;
+                v *= denom;
+                w *= denom;
+                intersectPos = u * a + v * d + w * c;
+            }
+
+            var t: f32;
+            if (abs(rayDir.x) > 0.1) {
+                t = (intersectPos.x - rayPos.x) / rayDir.x;
+            } else if (abs(rayDir.y) > 0.1) {
+                t = (intersectPos.y - rayPos.y) / rayDir.y;
+            } else {
+                t = (intersectPos.z - rayPos.z) / rayDir.z;
+            }
+
+            if (t > 0.0001 && t < (*info).t) {
+                (*info).t = t;
+                (*info).normal = normal;
+                (*info).hit = true;
+                return true;
+            }
+
+            return false;
+        }
+
+        fn traceScene(){
+            
+        }
+
       @fragment
       fn fs_main(@builtin(position) fragCoord: vec4<f32>) -> @location(0) vec4<f32> {
         let res = uniforms.resolution;                 // USE the uniforms -> keeps binding
@@ -90,14 +182,16 @@ export default function PathTraceSphere() {
         uv.x *= res.x / res.y;
         uv.y *= -1.0;
 
-        let ro = vec3<f32>(0.0, 0.0, 10.0);
+        let ro = vec3<f32>(0.0, 0.0, 5.0);
         let rd = normalize(vec3<f32>(uv, -1.5));
-
-        let hit = intersectSphere(Ray(ro, rd), vec3<f32>(0.0, -1.0, 0.0), 1.0);
-        if (hit.hit) {
-            let L = max(0.0, dot(normalize(lightPosition - hit.position), hit.normal )) * lightColor * lambertianPDF;
+        var hitInfo = Hit(false, 10000.0, vec3<f32>(0.0), vec3<f32>(0.0));
+        // let hit = intersectSphere(Ray(ro, rd), vec3<f32>(0.0, -1.0, 0.0), 1.0);
+        testQuadTrace(ro, rd, vec3f(-1.0, 1.0, -1.0), vec3f(-1.0, 0.0, 0.0), vec3f(1.0, 0.0, 0.0), vec3f(1.0, 1.0, -1.0), &hitInfo);
+        if (hitInfo.hit) {
+            let rayPos = ro + rd * hitInfo.t;
+            let L = max(0.0, dot(normalize(lightPosition - rayPos), hitInfo.normal )) * lightColor * lambertianPDF;
             // visualize normal for now (you can switch to solid red if you want)
-            // return vec4<f32>(hit.normal * 0.5 + 0.5, 1.0);
+            // return vec4<f32>(hitInfo.normal * 0.5 + 0.5, 1.0);
             return vec4<f32>(L, 1.0);
         }
         return vec4<f32>(0.0, 0.0, 0.0, 1.0);
