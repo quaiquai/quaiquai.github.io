@@ -58,11 +58,11 @@ export default function PathTraceSphere() {
         return vec4<f32>(pos, 0.0, 1.0);
       }
 
-      const lightPosition = vec3<f32>(0.0, 3.0, 0.0);
+      const lightPosition = vec3<f32>(0.0, 3.0, 2.0);
       const lightColor = vec3<f32>(0.9, 0.9, 0.8);
       const lambertianPDF = 1.0/3.14;
 
-      fn intersectSphere(ray: Ray, center: vec3<f32>, radius: f32) -> Hit {
+      fn intersectSphere(ray: Ray, center: vec3<f32>, radius: f32, hitInfo: ptr<function, Hit>) -> bool{
         let oc = ray.origin - center;
         let a = dot(ray.dir, ray.dir);
         let b = 2.0 * dot(oc, ray.dir);
@@ -70,17 +70,29 @@ export default function PathTraceSphere() {
         let discriminant = b*b - 4.0*a*c;
 
         if (discriminant < 0.0) {
-          return Hit(false, -1.0, vec3<f32>(0.0), vec3<f32>(0.0));
+            // (*hitInfo) = Hit(false, 1000000.0, vec3<f32>(0.0), vec3<f32>(0.0));
+            return false;
         }
 
         let t = (-b - sqrt(discriminant)) / (2.0*a);
         if (t < 0.0) {
-          return Hit(false, -1.0, vec3<f32>(0.0), vec3<f32>(0.0));
+        //   (*hitInfo) = Hit(false, 100000.0, vec3<f32>(0.0), vec3<f32>(0.0));
+          return false;
         }
 
-        let pos = ray.origin + t * ray.dir;
-        let normal = normalize(pos - center);
-        return Hit(true, t, pos, normal);
+        if (t > 0.0001 && t < (*hitInfo).t) {
+            let pos = ray.origin + t * ray.dir;
+            let normal = normalize(pos - center);
+            (*hitInfo).t = t;
+            (*hitInfo).position = pos;
+            (*hitInfo).normal = normal;
+            (*hitInfo).hit = true;
+            // (*hitInfo) = Hit(true, t, pos, normal);
+            return true;
+        }
+
+        return false;
+        
       }
 
       fn scalarTriple(a: vec3<f32>, b: vec3<f32>, c: vec3<f32>) -> f32 {
@@ -171,7 +183,14 @@ export default function PathTraceSphere() {
             return false;
         }
 
-        fn traceScene(){
+        fn traceScene(ro: vec3f, rd: vec3f, hitInfo: ptr<function, Hit>){
+
+            if(testQuadTrace(ro, rd, vec3f(-1.0, 1.0, 0.0), vec3f(-1.0, -1.0, 0.0), vec3f(1.0, -1.0, 0.0), vec3f(1.0, 1.0, 0.0), hitInfo)){
+            }
+            if(testQuadTrace(ro, rd, vec3f(-1.0, -1.0, 0.0), vec3f(-1.0, -1.0, 1.0), vec3f(1.0, -1.0, 1.0), vec3f(1.0, -1.0, 0.0), hitInfo)){
+            }
+            if(intersectSphere(Ray(ro, rd), vec3<f32>(0.0, -0.5, 0.25), 0.25, hitInfo)){
+            }
             
         }
 
@@ -182,11 +201,10 @@ export default function PathTraceSphere() {
         uv.x *= res.x / res.y;
         uv.y *= -1.0;
 
-        let ro = vec3<f32>(0.0, 0.0, 5.0);
+        let ro = vec3<f32>(0.0, 0.5, 5.0);
         let rd = normalize(vec3<f32>(uv, -1.5));
-        var hitInfo = Hit(false, 10000.0, vec3<f32>(0.0), vec3<f32>(0.0));
-        // let hit = intersectSphere(Ray(ro, rd), vec3<f32>(0.0, -1.0, 0.0), 1.0);
-        testQuadTrace(ro, rd, vec3f(-1.0, 1.0, -1.0), vec3f(-1.0, 0.0, 0.0), vec3f(1.0, 0.0, 0.0), vec3f(1.0, 1.0, -1.0), &hitInfo);
+        var hitInfo = Hit(false, 100000.0, vec3<f32>(0.0), vec3<f32>(0.0));
+        traceScene(ro, rd, &hitInfo);
         if (hitInfo.hit) {
             let rayPos = ro + rd * hitInfo.t;
             let L = max(0.0, dot(normalize(lightPosition - rayPos), hitInfo.normal )) * lightColor * lambertianPDF;
