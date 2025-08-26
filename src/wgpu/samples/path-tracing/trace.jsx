@@ -58,8 +58,8 @@ export default function PathTraceSphere() {
         return vec4<f32>(pos, 0.0, 1.0);
       }
 
-      const lightPosition = vec3<f32>(0.0, 3.0, 2.0);
-      const lightColor = vec3<f32>(0.9, 0.9, 0.8);
+      const lightPosition = vec3<f32>(0.0, 1.0, 1.0);
+      const lightColor = vec3<f32>(1.0, 1.0, 1.0);
       const lambertianPDF = 1.0/3.14;
 
       fn intersectSphere(ray: Ray, center: vec3<f32>, radius: f32, hitInfo: ptr<function, Hit>) -> bool{
@@ -194,6 +194,8 @@ export default function PathTraceSphere() {
             
         }
 
+        fn sampleLight(){}
+
       @fragment
       fn fs_main(@builtin(position) fragCoord: vec4<f32>) -> @location(0) vec4<f32> {
         let res = uniforms.resolution;                 // USE the uniforms -> keeps binding
@@ -207,10 +209,12 @@ export default function PathTraceSphere() {
         traceScene(ro, rd, &hitInfo);
         if (hitInfo.hit) {
             let rayPos = ro + rd * hitInfo.t;
-            let L = max(0.0, dot(normalize(lightPosition - rayPos), hitInfo.normal )) * lightColor * lambertianPDF;
+            let distance = length(lightPosition - rayPos);
+            let d2 = distance * distance;
+            let L = lightColor * 2.0 * max(0.0, dot(hitInfo.normal, normalize(lightPosition - rayPos) )) / (3.14 * d2);
             // visualize normal for now (you can switch to solid red if you want)
             // return vec4<f32>(hitInfo.normal * 0.5 + 0.5, 1.0);
-            return vec4<f32>(L, 1.0);
+            return vec4<f32>(clamp(L, vec3f(0.0), vec3f(1.0)), 1.0);
         }
         return vec4<f32>(0.0, 0.0, 0.0, 1.0);
       }
