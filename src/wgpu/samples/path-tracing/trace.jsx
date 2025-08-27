@@ -3,6 +3,11 @@ import React, { useEffect, useRef } from "react";
 import { useWebGPU } from "../../useWebGPU";
 import useCanvasSize from "../../useCanvasSize";
 
+import fragwgsl from "../../shaders/path-tracing/pathTracingFrag.wgsl?raw"
+import vertwgsl from "../../shaders/path-tracing/pathTracingVert.wgsl?raw"
+
+import {getCameraPos, onMouseDown, onMouseMove, onMouseUp, target, up} from "../../camera.js"
+
 export default function PathTraceSphere() {
   const canvasRef = useRef(null);
   const canvasSize = useCanvasSize();
@@ -18,6 +23,10 @@ export default function PathTraceSphere() {
       return;
     }
 
+    canvas.addEventListener("mousedown", onMouseDown);
+    window.addEventListener("mousemove", onMouseMove);
+    window.addEventListener("mouseup", onMouseUp);
+
     // Fullscreen quad vertices (clip space)
     const quadVerts = new Float32Array([
       -1, -1,  1, -1,  -1,  1,
@@ -31,304 +40,13 @@ export default function PathTraceSphere() {
     new Float32Array(quadBuffer.getMappedRange()).set(quadVerts);
     quadBuffer.unmap();
 
-    const shaderWGSL = /* wgsl */`
-      struct Uniforms {
-        resolution : vec2<f32>,
-        frame      : u32,
-        _pad       : u32,   // keep 16-byte alignment
-      };
-      @group(0) @binding(0) var<uniform> uniforms : Uniforms;
-
-      struct Ray {
-        origin: vec3<f32>,
-        dir: vec3<f32>,
-      };
-
-      struct Hit {
-        hit: bool,
-        t: f32,
-        position: vec3<f32>,
-        normal: vec3<f32>,
-      };
-
-      @vertex
-      fn vs_main(@location(0) pos : vec2<f32>) -> @builtin(position) vec4<f32> {
-        // Touch uniforms so the binding isn’t stripped (optional, fragment also uses it)
-        let _dummy = uniforms.frame;
-        return vec4<f32>(pos, 0.0, 1.0);
-      }
-
-      const lightPosition = vec3<f32>(0.0, 1.0, 0.5);
-      const lightColor = vec3<f32>(1.0, 1.0, 1.0);
-      const lambertianPDF = 1.0/3.14;
-
-      fn intersectSphere(ray: Ray, center: vec3<f32>, radius: f32, hitInfo: ptr<function, Hit>) -> bool{
-        let oc = ray.origin - center;
-        let a = dot(ray.dir, ray.dir);
-        let b = 2.0 * dot(oc, ray.dir);
-        let c = dot(oc, oc) - radius * radius;
-        let discriminant = b*b - 4.0*a*c;
-
-        if (discriminant < 0.0) {
-            // (*hitInfo) = Hit(false, 1000000.0, vec3<f32>(0.0), vec3<f32>(0.0));
-            return false;
-        }
-
-        let t = (-b - sqrt(discriminant)) / (2.0*a);
-        if (t < 0.0) {
-        //   (*hitInfo) = Hit(false, 100000.0, vec3<f32>(0.0), vec3<f32>(0.0));
-          return false;
-        }
-
-        if (t > 0.0001 && t < (*hitInfo).t) {
-            let pos = ray.origin + t * ray.dir;
-            let normal = normalize(pos - center);
-            (*hitInfo).t = t;
-            (*hitInfo).position = pos;
-            (*hitInfo).normal = normal;
-            (*hitInfo).hit = true;
-            // (*hitInfo) = Hit(true, t, pos, normal);
-            return true;
-        }
-
-        return false;
-        
-      }
-
-      fn scalarTriple(a: vec3<f32>, b: vec3<f32>, c: vec3<f32>) -> f32 {
-            return dot(a, cross(b, c));
-        }
-
-        fn testQuadTrace(
-            rayPos: vec3<f32>,
-            rayDir: vec3<f32>,
-            a_in: vec3<f32>,
-            b_in: vec3<f32>,
-            c_in: vec3<f32>,
-            d_in: vec3<f32>,
-            info: ptr<function, Hit>
-        ) -> bool {
-            var a = a_in;
-            var b = b_in;
-            var c = c_in;
-            var d = d_in;
-
-            // calculate normal and flip vertices order if needed
-            var normal = normalize(cross(c - a, c - b));
-            if (dot(normal, rayDir) > 0.0) {
-                normal = -normal;
-
-                var temp = d;
-                d = a;
-                a = temp;
-
-                temp = b;
-                b = c;
-                c = temp;
-            }
-
-            let p = rayPos;
-            let q = rayPos + rayDir;
-            let pq = q - p;
-            let pa = a - p;
-            let pb = b - p;
-            let pc = c - p;
-
-            // determine which triangle to test against by testing against diagonal first
-            let m = cross(pc, pq);
-            var v = dot(pa, m);
-            var intersectPos = vec3<f32>(0.0);
-
-            if (v >= 0.0) {
-                // test against triangle a,b,c
-                var u = -dot(pb, m);
-                if (u < 0.0) { return false; }
-                var w = scalarTriple(pq, pb, pa);
-                if (w < 0.0) { return false; }
-                let denom = 1.0 / (u + v + w);
-                u *= denom;
-                v *= denom;
-                w *= denom;
-                intersectPos = u * a + v * b + w * c;
-            } else {
-                let pd = d - p;
-                var u = dot(pd, m);
-                if (u < 0.0) { return false; }
-                var w = scalarTriple(pq, pa, pd);
-                if (w < 0.0) { return false; }
-                v = -v;
-                let denom = 1.0 / (u + v + w);
-                u *= denom;
-                v *= denom;
-                w *= denom;
-                intersectPos = u * a + v * d + w * c;
-            }
-
-            var t: f32;
-            if (abs(rayDir.x) > 0.1) {
-                t = (intersectPos.x - rayPos.x) / rayDir.x;
-            } else if (abs(rayDir.y) > 0.1) {
-                t = (intersectPos.y - rayPos.y) / rayDir.y;
-            } else {
-                t = (intersectPos.z - rayPos.z) / rayDir.z;
-            }
-
-            if (t > 0.0001 && t < (*info).t) {
-                (*info).t = t;
-                (*info).normal = normal;
-                (*info).hit = true;
-                return true;
-            }
-
-            return false;
-        }
-
-        fn intersectSphereShadow(ray: Ray, center: vec3<f32>, radius: f32) -> bool {
-            let oc = ray.origin - center;
-            let a = dot(ray.dir, ray.dir);
-            let b = 2.0 * dot(oc, ray.dir);
-            let c = dot(oc, oc) - radius * radius;
-            let discriminant = b*b - 4.0*a*c;
-
-            if (discriminant < 0.0) {
-                return false;
-            }
-
-            let t = (-b - sqrt(discriminant)) / (2.0*a);
-            if (t < 0.0) {
-                return false;
-            }
-
-            return true;
-
-        }
-
-        fn intersectQuad(rayPos: vec3f, rayDir: vec3f, a_in: vec3<f32>,
-            b_in: vec3<f32>,
-            c_in: vec3<f32>,
-            d_in: vec3<f32>,)->bool{
-            var a = a_in;
-            var b = b_in;
-            var c = c_in;
-            var d = d_in;
-
-            // calculate normal and flip vertices order if needed
-            var normal = normalize(cross(c - a, c - b));
-            if (dot(normal, rayDir) > 0.0) {
-                normal = -normal;
-
-                var temp = d;
-                d = a;
-                a = temp;
-
-                temp = b;
-                b = c;
-                c = temp;
-            }
-
-            let p = rayPos;
-            let q = rayPos + rayDir;
-            let pq = q - p;
-            let pa = a - p;
-            let pb = b - p;
-            let pc = c - p;
-
-            // determine which triangle to test against by testing against diagonal first
-            let m = cross(pc, pq);
-            var v = dot(pa, m);
-            var intersectPos = vec3<f32>(0.0);
-
-            if (v >= 0.0) {
-                // test against triangle a,b,c
-                var u = -dot(pb, m);
-                if (u < 0.0) { return false; }
-                var w = scalarTriple(pq, pb, pa);
-                if (w < 0.0) { return false; }
-                let denom = 1.0 / (u + v + w);
-                u *= denom;
-                v *= denom;
-                w *= denom;
-                intersectPos = u * a + v * b + w * c;
-            } else {
-                let pd = d - p;
-                var u = dot(pd, m);
-                if (u < 0.0) { return false; }
-                var w = scalarTriple(pq, pa, pd);
-                if (w < 0.0) { return false; }
-                v = -v;
-                let denom = 1.0 / (u + v + w);
-                u *= denom;
-                v *= denom;
-                w *= denom;
-                intersectPos = u * a + v * d + w * c;
-            }
-
-            return true;
-        }
-
-        fn traceScene(ro: vec3f, rd: vec3f, hitInfo: ptr<function, Hit>){
-
-            if(testQuadTrace(ro, rd, vec3f(-1.0, 1.0, 0.0), vec3f(-1.0, -1.0, 0.0), vec3f(1.0, -1.0, 0.0), vec3f(1.0, 1.0, 0.0), hitInfo)){
-            }
-            if(testQuadTrace(ro, rd, vec3f(-1.0, -1.0, 0.0), vec3f(-1.0, -1.0, 1.0), vec3f(1.0, -1.0, 1.0), vec3f(1.0, -1.0, 0.0), hitInfo)){
-            }
-            if(intersectSphere(Ray(ro, rd), vec3<f32>(0.0, -0.5, 0.25), 0.25, hitInfo)){
-            }
-            
-        }
-        
-        fn traceIntersect(ro: vec3f, rd: vec3f){
-
-        }
-
-        //pointlight sample
-        fn sampleLight(){}
-
-        //in shadow
-        fn getOcclution(ro: vec3f, lightPos: vec3f) -> bool{
-            let lightDir = lightPos - ro;
-            if(intersectSphereShadow(Ray(ro, lightDir), vec3<f32>(0.0, -0.5, 0.25), 0.25)){
-                return true;
-            }
-            return false;
-        }
-
-      @fragment
-      fn fs_main(@builtin(position) fragCoord: vec4<f32>) -> @location(0) vec4<f32> {
-        let res = uniforms.resolution;                 // USE the uniforms -> keeps binding
-        var uv = (fragCoord.xy / res) * 2.0 - vec2<f32>(1.0, 1.0);
-        uv.x *= res.x / res.y;
-        uv.y *= -1.0;
-
-        let ro = vec3<f32>(0.0, 0.5, 5.0);
-        let rd = normalize(vec3<f32>(uv, -1.5));
-        var hitInfo = Hit(false, 100000.0, vec3<f32>(0.0), vec3<f32>(0.0));
-        traceScene(ro, rd, &hitInfo);
-        if (hitInfo.hit) {
-            let rayPos = ro + rd * hitInfo.t;
-            let distance = length(lightPosition - rayPos);
-            let d2 = distance * distance;
-
-            //shadow calc
-            let occuld = getOcclution(rayPos, lightPosition);
-            if(occuld){
-                return vec4<f32>(vec3f(0.0), 1.0);
-            }
-
-            let L = lightColor * 2.0 * max(0.0, dot(hitInfo.normal, normalize(lightPosition - rayPos) )) / (3.14 * d2);
-            // visualize normal for now (you can switch to solid red if you want)
-            // return vec4<f32>(hitInfo.normal * 0.5 + 0.5, 1.0);
-            return vec4<f32>(clamp(L, vec3f(0.0), vec3f(1.0)), 1.0);
-        }
-        return vec4<f32>(0.0, 0.0, 0.0, 1.0);
-      }
-    `;
 
     async function init() {
-      const shaderModule = device.createShaderModule({ code: shaderWGSL });
+      const vertShaderModule = device.createShaderModule({code: vertwgsl});
+      const fragShaderModule = device.createShaderModule({code: fragwgsl});
 
       // Uniform buffer (16 bytes)
-      const uniformBufferSize = 16;
+      const uniformBufferSize = 80;
       const uniformBuffer = device.createBuffer({
         size: uniformBufferSize,
         usage: GPUBufferUsage.UNIFORM | GPUBufferUsage.COPY_DST,
@@ -365,10 +83,18 @@ export default function PathTraceSphere() {
       configureCanvas();
       window.addEventListener("resize", configureCanvas);
 
+      const layout = device.createBindGroupLayout({
+        entries:[{
+            binding: 0,
+            visibility: GPUShaderStage.VERTEX | GPUShaderStage.FRAGMENT,
+            buffer: {type: "uniform"}
+        }]
+      })
+
       const pipeline = device.createRenderPipeline({
-        layout: "auto",
+        layout: device.createPipelineLayout({bindGroupLayouts: [layout]}),
         vertex: {
-          module: shaderModule,
+          module: vertShaderModule,
           entryPoint: "vs_main",
           buffers: [{
             arrayStride: 8,
@@ -376,7 +102,7 @@ export default function PathTraceSphere() {
           }],
         },
         fragment: {
-          module: shaderModule,
+          module: fragShaderModule,
           entryPoint: "fs_main",
           targets: [{ format }],
         },
@@ -388,11 +114,25 @@ export default function PathTraceSphere() {
       function frame() {
         if (stopped) return;
         frameCount++;
+        const camPos = getCameraPos();
 
-        // resolution (x,y), frame, pad
-        device.queue.writeBuffer(uniformBuffer, 0, new Float32Array([canvas.width, canvas.height]));
-        device.queue.writeBuffer(uniformBuffer, 8, new Uint32Array([frameCount]));
-        device.queue.writeBuffer(uniformBuffer, 12, new Uint32Array([0]));
+        const UniformsValues = new ArrayBuffer(64);
+        const UniformsViews = {
+            resolution: new Float32Array(UniformsValues, 0, 2),
+            frame: new Uint32Array(UniformsValues, 8, 1),
+            cameraPos: new Float32Array(UniformsValues, 16, 3),
+            cameraTarget: new Float32Array(UniformsValues, 32, 3),
+            cameraUp: new Float32Array(UniformsValues, 48, 3),
+        };
+
+        UniformsViews.resolution.set([canvas.width, canvas.height]);
+        UniformsViews.frame.set([frameCount]);
+        UniformsViews.cameraPos.set([camPos[0], camPos[1], camPos[2]]);
+        UniformsViews.cameraTarget.set([target[0], target[1], target[2]]);
+        UniformsViews.cameraUp.set([up[0], up[1], up[2]]);
+
+        // Upload
+        device.queue.writeBuffer(uniformBuffer, 0, UniformsValues);
 
         const bindGroup = device.createBindGroup({
           layout: pipeline.getBindGroupLayout(0),
@@ -431,6 +171,9 @@ export default function PathTraceSphere() {
         window.removeEventListener("resize", configureCanvas);
         texA?.destroy?.();
         texB?.destroy?.();
+        canvas.removeEventListener("mousedown", onMouseDown);
+        window.removeEventListener("mousemove", onMouseMove);
+        window.removeEventListener("mouseup", onMouseUp);
       };
     }
 
