@@ -58,7 +58,7 @@ export default function PathTraceSphere() {
         return vec4<f32>(pos, 0.0, 1.0);
       }
 
-      const lightPosition = vec3<f32>(0.0, 1.0, 1.0);
+      const lightPosition = vec3<f32>(0.0, 1.0, 0.5);
       const lightColor = vec3<f32>(1.0, 1.0, 1.0);
       const lambertianPDF = 1.0/3.14;
 
@@ -183,6 +183,89 @@ export default function PathTraceSphere() {
             return false;
         }
 
+        fn intersectSphereShadow(ray: Ray, center: vec3<f32>, radius: f32) -> bool {
+            let oc = ray.origin - center;
+            let a = dot(ray.dir, ray.dir);
+            let b = 2.0 * dot(oc, ray.dir);
+            let c = dot(oc, oc) - radius * radius;
+            let discriminant = b*b - 4.0*a*c;
+
+            if (discriminant < 0.0) {
+                return false;
+            }
+
+            let t = (-b - sqrt(discriminant)) / (2.0*a);
+            if (t < 0.0) {
+                return false;
+            }
+
+            return true;
+
+        }
+
+        fn intersectQuad(rayPos: vec3f, rayDir: vec3f, a_in: vec3<f32>,
+            b_in: vec3<f32>,
+            c_in: vec3<f32>,
+            d_in: vec3<f32>,)->bool{
+            var a = a_in;
+            var b = b_in;
+            var c = c_in;
+            var d = d_in;
+
+            // calculate normal and flip vertices order if needed
+            var normal = normalize(cross(c - a, c - b));
+            if (dot(normal, rayDir) > 0.0) {
+                normal = -normal;
+
+                var temp = d;
+                d = a;
+                a = temp;
+
+                temp = b;
+                b = c;
+                c = temp;
+            }
+
+            let p = rayPos;
+            let q = rayPos + rayDir;
+            let pq = q - p;
+            let pa = a - p;
+            let pb = b - p;
+            let pc = c - p;
+
+            // determine which triangle to test against by testing against diagonal first
+            let m = cross(pc, pq);
+            var v = dot(pa, m);
+            var intersectPos = vec3<f32>(0.0);
+
+            if (v >= 0.0) {
+                // test against triangle a,b,c
+                var u = -dot(pb, m);
+                if (u < 0.0) { return false; }
+                var w = scalarTriple(pq, pb, pa);
+                if (w < 0.0) { return false; }
+                let denom = 1.0 / (u + v + w);
+                u *= denom;
+                v *= denom;
+                w *= denom;
+                intersectPos = u * a + v * b + w * c;
+            } else {
+                let pd = d - p;
+                var u = dot(pd, m);
+                if (u < 0.0) { return false; }
+                var w = scalarTriple(pq, pa, pd);
+                if (w < 0.0) { return false; }
+                v = -v;
+                let denom = 1.0 / (u + v + w);
+                u *= denom;
+                v *= denom;
+                w *= denom;
+                intersectPos = u * a + v * d + w * c;
+            }
+
+            return true;
+        }
+
         fn traceScene(ro: vec3f, rd: vec3f, hitInfo: ptr<function, Hit>){
 
             if(testQuadTrace(ro, rd, vec3f(-1.0, 1.0, 0.0), vec3f(-1.0, -1.0, 0.0), vec3f(1.0, -1.0, 0.0), vec3f(1.0, 1.0, 0.0), hitInfo)){
@@ -193,8 +276,22 @@ export default function PathTraceSphere() {
             }
             
         }
+        
+        fn traceIntersect(ro: vec3f, rd: vec3f){
 
+        }
+
+        //pointlight sample
         fn sampleLight(){}
+
+        //in shadow
+        fn getOcclution(ro: vec3f, lightPos: vec3f) -> bool{
+            let lightDir = lightPos - ro;
+            if(intersectSphereShadow(Ray(ro, lightDir), vec3<f32>(0.0, -0.5, 0.25), 0.25)){
+                return true;
+            }
+            return false;
+        }
 
       @fragment
       fn fs_main(@builtin(position) fragCoord: vec4<f32>) -> @location(0) vec4<f32> {
@@ -211,6 +308,13 @@ export default function PathTraceSphere() {
             let rayPos = ro + rd * hitInfo.t;
             let distance = length(lightPosition - rayPos);
             let d2 = distance * distance;
+
+            //shadow calc
+            let occuld = getOcclution(rayPos, lightPosition);
+            if(occuld){
+                return vec4<f32>(vec3f(0.0), 1.0);
+            }
+
             let L = lightColor * 2.0 * max(0.0, dot(hitInfo.normal, normalize(lightPosition - rayPos) )) / (3.14 * d2);
             // visualize normal for now (you can switch to solid red if you want)
             // return vec4<f32>(hitInfo.normal * 0.5 + 0.5, 1.0);
