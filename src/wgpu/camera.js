@@ -2,7 +2,7 @@
 let yaw = 0;
 let pitch = 0;
 let distance = 3.0;
-export const target = [0.0, 0.0,0.0];
+export const target = [0.0, 0.0, 0.0];
 export const up = [0.0, 1.0, 0.0];
 
 let isDragging = false;
@@ -19,19 +19,25 @@ export const getCameraPos = () => {
 }
 
 export function onMouseDown(e) {
-  isDragging = true;
-  lastX = e.clientX;
-  lastY = e.clientY;
-  needsReset = true;
+    isDragging = true;
+    lastX = e.clientX;
+    lastY = e.clientY;
+    needsReset = true;
 }
 export function onMouseMove(e) {
-  if (!isDragging) return;
-  const dx = (e.clientX - lastX) * 0.005;
-  const dy = (e.clientY - lastY) * 0.005;
-  yaw += dx;
-  pitch = Math.max(-Math.PI/2 + 0.1, Math.min(Math.PI/2 - 0.1, pitch + dy));
-  lastX = e.clientX;
-  lastY = e.clientY;
+    if (!isDragging) return;
+    const dx = (e.clientX - lastX) * 0.005;
+    const dy = (e.clientY - lastY) * 0.005;
+    yaw += dx;
+    pitch = Math.max(-Math.PI / 2 + 0.1, Math.min(Math.PI / 2 - 0.1, pitch + dy));
+    lastX = e.clientX;
+    lastY = e.clientY;
 }
 export function onMouseUp() { isDragging = false; }
+
+export const addCameraEvents = (canvas) => {
+    canvas.addEventListener("mousedown", onMouseDown);
+    window.addEventListener("mousemove", onMouseMove);
+    window.addEventListener("mouseup", onMouseUp);
+}
 
