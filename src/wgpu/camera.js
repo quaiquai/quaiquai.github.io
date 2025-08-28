@@ -9,6 +9,8 @@ let isDragging = false;
 let lastX = 0;
 let lastY = 0;
 
+export let needsReset = false;
+
 export const getCameraPos = () => {
     const x = distance * Math.cos(pitch) * Math.sin(yaw);
     const y = distance * Math.sin(pitch);
@@ -20,6 +22,7 @@ export function onMouseDown(e) {
   isDragging = true;
   lastX = e.clientX;
   lastY = e.clientY;
+  needsReset = true;
 }
 export function onMouseMove(e) {
   if (!isDragging) return;
