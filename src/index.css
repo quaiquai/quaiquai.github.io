@@ -263,4 +263,20 @@ mjx-container[jax="SVG"][display="true"] {
     margin: 1em 0;
 }
 
+.floating-image {
+  animation: floatAnimation 3s ease-in-out infinite;
+}
+
+@keyframes floatAnimation {
+  0% {
+    transform: translateY(0); /* Start at original position */
+  }
+  50% {
+    transform: translateY(-10px); /* Move up 10px */
+  }
+  100% {
+    transform: translateY(0); /* Return to original position */
+  }
+}
+
 

@@ -3,7 +3,6 @@ import React, { useEffect, useState, useRef } from "react";
 import {
   About,
   Experience,
-  Feedbacks,
   Hero,
   Navbar,
   Works,
@@ -12,7 +11,7 @@ import {
   ReactWebGPUTutorial,
   ResourceView,
   // Test,
-  BlogsList
+  BlogsList,
 } from "./components";
 import SpinningCube from "./wgpu/samples/simpleCube";
 import PathTraceSphere from "./wgpu/samples/path-tracing/trace";
@@ -45,6 +44,7 @@ const App = () => {
           <Route path="/publications" element={<Publications />}></Route>
           <Route path="/about" element={<About />}></Route>
           <Route path="/resources" element={<ResourceView />}></Route>
+          <Route path="/projects" element={<Works />}></Route>
           <Route exact path="/" element={<Hero />}></Route>
           <Route exact path="/tut" element={<ReactWebGPUTutorial />}></Route>
           <Route exact path="/blogs" element={<BlogsList/>}></Route>

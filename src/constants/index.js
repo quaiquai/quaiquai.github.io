@@ -26,7 +26,10 @@ import {
   paper,
   c,
   researcher,
-  threed
+  threed,
+  bridges,
+  teapot_area_light,
+  first_portals
 } from "../assets";
 
 export const navLinks = [
@@ -37,6 +40,10 @@ export const navLinks = [
   {
     id: "publications",
     title: "Publications",
+  },
+  {
+    id: "projects",
+    title: "Projects",
   },
   {
     id: "resources",
@@ -264,96 +271,236 @@ const experiences = [
   },
 ];
 
-const testimonials = [
-  {
-    testimonial:
-      "I thought it was impossible to make a website as beautiful as our product, but Rick proved me wrong.",
-    name: "Sara Lee",
-    designation: "CFO",
-    company: "Acme Co",
-    image: "https://randomuser.me/api/portraits/women/4.jpg",
-  },
-  {
-    testimonial:
-      "I've never met a web developer who truly cares about their clients' success like Rick does.",
-    name: "Chris Brown",
-    designation: "COO",
-    company: "DEF Corp",
-    image: "https://randomuser.me/api/portraits/men/5.jpg",
-  },
-  {
-    testimonial:
-      "After Rick optimized our website, our traffic increased by 50%. We can't thank them enough!",
-    name: "Lisa Wang",
-    designation: "CTO",
-    company: "456 Enterprises",
-    image: "https://randomuser.me/api/portraits/women/6.jpg",
-  },
-];
 
 const projects = [
   {
-    name: "Car Rent",
-    description:
-      "Web-based platform that allows users to search, book, and manage car rentals from various providers, providing a convenient and efficient solution for transportation needs.",
+    name: "BRIDGES",
+    position: "Lead Developer and Researcher",
+    description: "BRIDGES is an educational visualization tool students learn computer science concepts by making programming assignments more engaging and relevant. It provides a simple API (in Java, C++, and Python) that lets students work with real-world datasets—like movies, music, games, maps, or scientific data—and then visualize their code output as interactive structures.",
     tags: [
-      {
-        name: "react",
-        color: "blue-text-gradient",
-      },
-      {
-        name: "mongodb",
-        color: "green-text-gradient",
-      },
-      {
-        name: "tailwind",
-        color: "pink-text-gradient",
-      },
+      { name: "Java", color: "blue-text-gradient" },
+      { name: "C++", color: "green-text-gradient" },
+      { name: "Python", color: "pink-text-gradient" },
+      { name: "NodeJS", color: "pink-text-gradient" },
+      { name: "MongoDB", color: "pink-text-gradient" },
+      { name: "D3.js", color: "pink-text-gradient" },
+      { name: "WebGL", color: "pink-text-gradient" },
+      { name: "Express", color: "pink-text-gradient" },
     ],
-    image: carrent,
-    source_code_link: "https://github.com/",
+    image: bridges,
+    source_code_link: "https://bridgesuncc.github.io/",
   },
   {
-    name: "Job IT",
-    description:
-      "Web application that enables users to search for job openings, view estimated salary ranges for positions, and locate available jobs based on their current location.",
+    name: "BRIDGES Games",
+    position: "Lead Developer",
+    description: "A 3D rendering engine designed to learn computer science concepts by creating and manipulating games and graphics projects providing users with high-level function calls and objects to create 3D scenes. Features WebGL-based 2D/3D rendering API with custom scene serialization and efficient MongoDB storage using Run Length Encoding.",
     tags: [
-      {
-        name: "react",
-        color: "blue-text-gradient",
-      },
-      {
-        name: "restapi",
-        color: "green-text-gradient",
-      },
-      {
-        name: "scss",
-        color: "pink-text-gradient",
-      },
+      { name: "JavaScript", color: "blue-text-gradient" },
+      { name: "Express.js", color: "green-text-gradient" },
+      { name: "MongoDB", color: "pink-text-gradient" },
+      { name: "SocketIO", color: "blue-text-gradient" },
+      { name: "Java", color: "green-text-gradient" },
+      { name: "Python", color: "pink-text-gradient" },
+      { name: "C++", color: "blue-text-gradient" },
+      { name: "WebGL", color: "pink-text-gradient" },
     ],
-    image: jobit,
-    source_code_link: "https://github.com/",
+    image: bridges,
+    source_code_link: "https://bridgesuncc.github.io/",
   },
   {
-    name: "Trip Guide",
-    description:
-      "A comprehensive travel booking platform that allows users to book flights, hotels, and rental cars, and offers curated recommendations for popular destinations.",
+    name: "CS-Materials",
+    position: "Full-Stack Developer",
+    description: "Webtool for creating, analyzing, and searching for computer science materials that are classified against the ACM and PDC guidelines. Provides a visualization engine for aligning and auditing instructor courses and learning material with complex visualizations and binary matrix clustering.",
     tags: [
-      {
-        name: "nextjs",
-        color: "blue-text-gradient",
-      },
-      {
-        name: "supabase",
-        color: "green-text-gradient",
-      },
-      {
-        name: "css",
-        color: "pink-text-gradient",
-      },
+      { name: "Next.js", color: "blue-text-gradient" },
+      { name: "React", color: "green-text-gradient" },
+      { name: "Flask", color: "pink-text-gradient" },
+      { name: "D3.js", color: "blue-text-gradient" },
+      { name: "PostgreSQL", color: "green-text-gradient" },
+      { name: "AWS", color: "pink-text-gradient" },
+      { name: "TypeScript", color: "blue-text-gradient" },
+      { name: "WebGL", color: "green-text-gradient" },
     ],
-    image: tripguide,
-    source_code_link: "https://github.com/",
+    image: bridges,
+    source_code_link: "https://github.com/quaiquai/CSmaterials-layouts",
+  },
+  {
+    name: "ProjectLink GLSL Path Tracer",
+    position: "Graphics Developer",
+    description: "An OpenGL GLSL path tracing engine using compute shaders for real-time path tracing. Features advanced rendering techniques with GPU acceleration for realistic lighting and material simulation.",
+    tags: [
+      { name: "C++", color: "blue-text-gradient" },
+      { name: "OpenGL", color: "green-text-gradient" },
+      { name: "GLSL", color: "pink-text-gradient" },
+      { name: "Compute Shaders", color: "blue-text-gradient" },
+    ],
+    image: teapot_area_light,
+    source_code_link: "https://github.com/quaiquai/ProjectLink-GLSL-Path-Tracer",
+  },
+  {
+    name: "VOXSTILE",
+    position: "Game Engine Developer",
+    description: "Voxstile is a voxel-based horror game engine built in OpenGL, designed to generate infinite, procedurally generated Backrooms-style poolroom structures connected through non-euclidean-like portals. Features advanced procedural generation and spatial rendering techniques.",
+    tags: [
+      { name: "C++", color: "blue-text-gradient" },
+      { name: "OpenGL", color: "green-text-gradient" },
+      { name: "Procedural Generation", color: "pink-text-gradient" },
+      { name: "Voxel Rendering", color: "blue-text-gradient" },
+    ],
+    image: first_portals,
+    source_code_link: "https://github.com/quaiquai/VOXSTILE",
+  },
+  {
+    name: "Project Link Vulkan",
+    position: "Graphics Programmer",
+    description: "Advanced graphics rendering project utilizing the Vulkan API for high-performance, low-level graphics programming. Demonstrates modern graphics techniques and efficient GPU utilization.",
+    tags: [
+      { name: "C++", color: "blue-text-gradient" },
+      { name: "Vulkan", color: "green-text-gradient" },
+      { name: "Graphics Programming", color: "pink-text-gradient" },
+    ],
+    image: bridges,
+    source_code_link: "https://github.com/quaiquai/Project-Link-Vulkan",
+  },
+  {
+    name: "Retro 3D Engine",
+    position: "Engine Developer",
+    description: "3D graphics engine created to mimic the PlayStation 1 style of rendering. Features authentic retro graphics techniques including vertex snapping, affine texture mapping, and limited color palettes to recreate the classic PS1 aesthetic.",
+    tags: [
+      { name: "C++", color: "blue-text-gradient" },
+      { name: "OpenGL", color: "green-text-gradient" },
+      { name: "Retro Graphics", color: "pink-text-gradient" },
+      { name: "3D Engine", color: "blue-text-gradient" },
+    ],
+    image: bridges,
+    source_code_link: "https://github.com/quaiquai/Retro-3D-Engine",
+  },
+  {
+    name: "Small WebGL 3D Engine",
+    position: "Web Graphics Developer",
+    description: "Small WebGL engine in the making. A lightweight 3D graphics engine built for web browsers using WebGL, focusing on performance and ease of use for web-based 3D applications.",
+    tags: [
+      { name: "WebGL", color: "blue-text-gradient" },
+      { name: "JavaScript", color: "green-text-gradient" },
+      { name: "3D Graphics", color: "pink-text-gradient" },
+      { name: "Web Development", color: "blue-text-gradient" },
+    ],
+    image: bridges,
+    source_code_link: "https://github.com/quaiquai/Small-WebGL-3D-Engine",
+  },
+  {
+    name: "Three.js Portals",
+    position: "3D Web Developer",
+    description: "Implementation of portal rendering effects using Three.js. Features seamless transitions between different 3D environments through portal mechanics, demonstrating advanced WebGL techniques and spatial rendering.",
+    tags: [
+      { name: "JavaScript", color: "blue-text-gradient" },
+      { name: "Three.js", color: "green-text-gradient" },
+      { name: "WebGL", color: "pink-text-gradient" },
+      { name: "Portal Rendering", color: "blue-text-gradient" },
+    ],
+    image: bridges,
+    source_code_link: "https://github.com/quaiquai/threejs-portals",
+  },
+  {
+    name: "Real-Time Ray Tracing Engine (Non-Euclidean)",
+    position: "Graphics Researcher",
+    description: "Built a real-time ray tracing engine in WebGL, enabling rendering of non-Euclidean geometries such as hyperbolic and spherical spaces. Optimized rendering performance using GPU acceleration and custom algorithms for ray-object intersection in non-Euclidean environments.",
+    tags: [
+      { name: "WebGL", color: "blue-text-gradient" },
+      { name: "GLSL", color: "green-text-gradient" },
+      { name: "Express", color: "pink-text-gradient" },
+      { name: "JavaScript", color: "blue-text-gradient" },
+      { name: "Ray Tracing", color: "green-text-gradient" },
+    ],
+    image: bridges,
+    source_code_link: "#",
+  },
+  {
+    name: "AR/VR Perception Software",
+    position: "Senior Software Engineer",
+    description: "Developed advanced AR/VR perception software using C++, integrating eye tracking, Global Illumination, and Physically Based Rendering. Founded concept of visual field congruence showing 30% reduction in depth estimation errors with advanced rendering techniques.",
+    tags: [
+      { name: "C++", color: "blue-text-gradient" },
+      { name: "AR/VR", color: "green-text-gradient" },
+      { name: "Eye Tracking", color: "pink-text-gradient" },
+      { name: "PBR", color: "blue-text-gradient" },
+      { name: "OpenGL", color: "green-text-gradient" },
+    ],
+    image: bridges,
+    source_code_link: "#",
+  },
+  {
+    name: "HoloLens 3D Reconstruction Pipeline",
+    position: "Mixed Reality Developer",
+    description: "Developed a 3D reconstruction pipeline using the HoloLens 2's time-of-flight (ToF) depth sensor and RGB camera using MRTK, OpenCL and DX12. Implemented real-time light position acquisition for dynamic image-based lighting in mixed-reality environments.",
+    tags: [
+      { name: "C#", color: "blue-text-gradient" },
+      { name: "Unity3D", color: "green-text-gradient" },
+      { name: "HoloLens SDK", color: "pink-text-gradient" },
+      { name: "MRTK", color: "blue-text-gradient" },
+      { name: "OpenCL", color: "green-text-gradient" },
+      { name: "DX12", color: "pink-text-gradient" },
+    ],
+    image: bridges,
+    source_code_link: "#",
+  },
+  {
+    name: "Lung Cancer Detection (3D U-Nets)",
+    position: "ML Researcher",
+    description: "Developed a deep learning model for lung cancer detection using 3D U-Net architecture, achieving high accuracy in segmenting and classifying lung nodules from 3D CT scans. Leveraged RadIO library for preprocessing and conducted extensive hyperparameter tuning.",
+    tags: [
+      { name: "Python", color: "blue-text-gradient" },
+      { name: "TensorFlow", color: "green-text-gradient" },
+      { name: "PyTorch", color: "pink-text-gradient" },
+      { name: "NumPy", color: "blue-text-gradient" },
+      { name: "OpenCV", color: "green-text-gradient" },
+      { name: "RadIO", color: "pink-text-gradient" },
+    ],
+    image: bridges,
+    source_code_link: "https://github.com/quaiquai/LCD-radIO-unccv",
+  },
+  {
+    name: "Interactive Algorithms Textbook",
+    position: "Educational Software Developer",
+    description: "Designed and developed interactive learning modules and visualizations for algorithms and data structures to enhance student engagement. Created dynamic, step-by-step visualizations of complex algorithms with automated grading and LTI integration.",
+    tags: [
+      { name: "JavaScript", color: "blue-text-gradient" },
+      { name: "HTML5", color: "green-text-gradient" },
+      { name: "CSS", color: "pink-text-gradient" },
+      { name: "Python", color: "blue-text-gradient" },
+      { name: "D3.js", color: "green-text-gradient" },
+      { name: "LTI", color: "pink-text-gradient" },
+    ],
+    image: bridges,
+    source_code_link: "https://github.com/quaiquai/OpenDSA-UNCC",
+  },
+  {
+    name: "Bibliographic Recommendations (ML)",
+    position: "Data Scientist",
+    description: "Created a machine learning-based system to generate and visualize diversified bibliographic recommendations from word embeddings mapped to 2D space. Processed large bibliographic datasets using Self-Organizing Maps with interactive visualizations.",
+    tags: [
+      { name: "Python", color: "blue-text-gradient" },
+      { name: "Scikit-learn", color: "green-text-gradient" },
+      { name: "TensorFlow", color: "pink-text-gradient" },
+      { name: "D3.js", color: "blue-text-gradient" },
+      { name: "Pandas", color: "green-text-gradient" },
+      { name: "NumPy", color: "pink-text-gradient" },
+    ],
+    image: bridges,
+    source_code_link: "#",
+  },
+  {
+    name: "Twitter Mining in R",
+    position: "Data Analyst",
+    description: "Simple work with mining data from Twitter and creating statistical visualizations in RStudio. Demonstrates data collection, processing, and visualization techniques for social media analytics.",
+    tags: [
+      { name: "R", color: "blue-text-gradient" },
+      { name: "Data Mining", color: "green-text-gradient" },
+      { name: "Statistical Analysis", color: "pink-text-gradient" },
+      { name: "Visualization", color: "blue-text-gradient" },
+    ],
+    image: bridges,
+    source_code_link: "https://github.com/quaiquai/Twitter-Mining-in-R",
   },
 ];
 
@@ -369,4 +516,4 @@ const blogs = [
   }
 ]
 
-export { services, technologies, experiences, testimonials, projects, publications, blogs };
+export { services, technologies, experiences, projects, publications, blogs };
