@@ -29,7 +29,9 @@ import {
   threed,
   bridges,
   teapot_area_light,
-  first_portals
+  first_portals,
+  erik_v_kr,
+  bridges_games
 } from "../assets";
 
 export const navLinks = [
@@ -304,8 +306,8 @@ const projects = [
       { name: "C++", color: "blue-text-gradient" },
       { name: "WebGL", color: "pink-text-gradient" },
     ],
-    image: bridges,
-    source_code_link: "https://bridgesuncc.github.io/",
+    image: bridges_games,
+    source_code_link: "https://bridges-games.herokuapp.com/#api",
   },
   {
     name: "CS-Materials",
@@ -321,11 +323,11 @@ const projects = [
       { name: "TypeScript", color: "blue-text-gradient" },
       { name: "WebGL", color: "green-text-gradient" },
     ],
-    image: bridges,
-    source_code_link: "https://github.com/quaiquai/CSmaterials-layouts",
+    image: erik_v_kr,
+    source_code_link: "https://github.com/BridgesUNCC/cs-materials-react-webclient",
   },
   {
-    name: "ProjectLink GLSL Path Tracer",
+    name: "GLSL Path Tracer",
     position: "Graphics Developer",
     description: "An OpenGL GLSL path tracing engine using compute shaders for real-time path tracing. Features advanced rendering techniques with GPU acceleration for realistic lighting and material simulation.",
     tags: [
@@ -350,18 +352,18 @@ const projects = [
     image: first_portals,
     source_code_link: "https://github.com/quaiquai/VOXSTILE",
   },
-  {
-    name: "Project Link Vulkan",
-    position: "Graphics Programmer",
-    description: "Advanced graphics rendering project utilizing the Vulkan API for high-performance, low-level graphics programming. Demonstrates modern graphics techniques and efficient GPU utilization.",
-    tags: [
-      { name: "C++", color: "blue-text-gradient" },
-      { name: "Vulkan", color: "green-text-gradient" },
-      { name: "Graphics Programming", color: "pink-text-gradient" },
-    ],
-    image: bridges,
-    source_code_link: "https://github.com/quaiquai/Project-Link-Vulkan",
-  },
+  // {
+  //   name: "Project Link Vulkan",
+  //   position: "Graphics Programmer",
+  //   description: "Advanced graphics rendering project utilizing the Vulkan API for high-performance, low-level graphics programming. Demonstrates modern graphics techniques and efficient GPU utilization.",
+  //   tags: [
+  //     { name: "C++", color: "blue-text-gradient" },
+  //     { name: "Vulkan", color: "green-text-gradient" },
+  //     { name: "Graphics Programming", color: "pink-text-gradient" },
+  //   ],
+  //   image: bridges,
+  //   source_code_link: "https://github.com/quaiquai/Project-Link-Vulkan",
+  // },
   {
     name: "Retro 3D Engine",
     position: "Engine Developer",
@@ -488,19 +490,6 @@ const projects = [
     ],
     image: bridges,
     source_code_link: "#",
-  },
-  {
-    name: "Twitter Mining in R",
-    position: "Data Analyst",
-    description: "Simple work with mining data from Twitter and creating statistical visualizations in RStudio. Demonstrates data collection, processing, and visualization techniques for social media analytics.",
-    tags: [
-      { name: "R", color: "blue-text-gradient" },
-      { name: "Data Mining", color: "green-text-gradient" },
-      { name: "Statistical Analysis", color: "pink-text-gradient" },
-      { name: "Visualization", color: "blue-text-gradient" },
-    ],
-    image: bridges,
-    source_code_link: "https://github.com/quaiquai/Twitter-Mining-in-R",
   },
 ];
 

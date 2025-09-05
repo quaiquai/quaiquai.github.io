@@ -40,6 +40,8 @@ import researcher from './researcher.png'
 import bridges from './bridges.png'
 import teapot_area_light from './teapot_area_light.png'
 import first_portals from './first_portals.gif'
+import erik_v_kr from  './erik_v_kr.png'
+import bridges_games from './bridges_games.gif'
 
 export {
   logo,
@@ -79,5 +81,7 @@ export {
   researcher, 
   bridges,
   teapot_area_light,
-  first_portals
+  first_portals,
+  erik_v_kr,
+  bridges_games
 };
