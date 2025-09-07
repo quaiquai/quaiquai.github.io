@@ -42,6 +42,7 @@ import first_portals from './first_portals.gif'
 import erik_v_kr from  './erik_v_kr.png'
 import bridges_games from './bridges_games.gif'
 import bridges from './bridges.gif'
+import mario_galaxy from './mario_galaxy.gif'
 
 export {
   logo,
@@ -83,5 +84,6 @@ export {
   first_portals,
   erik_v_kr,
   bridges_games,
-  bridges
+  bridges,
+  mario_galaxy
 };

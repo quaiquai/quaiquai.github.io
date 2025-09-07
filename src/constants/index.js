@@ -31,7 +31,8 @@ import {
   first_portals,
   erik_v_kr,
   bridges_games,
-  bridges
+  bridges,
+  mario_galaxy
 } from "../assets";
 
 export const navLinks = [
@@ -374,7 +375,7 @@ const projects = [
       { name: "Retro Graphics", color: "pink-text-gradient" },
       { name: "3D Engine", color: "blue-text-gradient" },
     ],
-    image: bridges,
+    image: mario_galaxy,
     source_code_link: "https://github.com/quaiquai/Retro-3D-Engine",
   },
   {
