@@ -27,11 +27,11 @@ import {
   c,
   researcher,
   threed,
-  bridges,
   teapot_area_light,
   first_portals,
   erik_v_kr,
-  bridges_games
+  bridges_games,
+  bridges
 } from "../assets";
 
 export const navLinks = [

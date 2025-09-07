@@ -37,11 +37,11 @@ import paper from './paper.png';
 import threed from './3d.png'
 import c from './c++.png'
 import researcher from './researcher.png'
-import bridges from './bridges.png'
 import teapot_area_light from './teapot_area_light.png'
 import first_portals from './first_portals.gif'
 import erik_v_kr from  './erik_v_kr.png'
 import bridges_games from './bridges_games.gif'
+import bridges from './bridges.gif'
 
 export {
   logo,
@@ -79,9 +79,9 @@ export {
   threed,
   c,
   researcher, 
-  bridges,
   teapot_area_light,
   first_portals,
   erik_v_kr,
-  bridges_games
+  bridges_games,
+  bridges
 };

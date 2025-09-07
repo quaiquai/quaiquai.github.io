@@ -264,7 +264,7 @@ mjx-container[jax="SVG"][display="true"] {
 }
 
 .floating-image {
-  animation: floatAnimation 3s ease-in-out infinite;
+  animation: floatAnimation 1s ease-in-out infinite;
 }
 
 @keyframes floatAnimation {
