@@ -43,6 +43,7 @@ import erik_v_kr from  './erik_v_kr.png'
 import bridges_games from './bridges_games.gif'
 import bridges from './bridges.gif'
 import mario_galaxy from './mario_galaxy.gif'
+import webgl_path from './webgl_path.gif'
 
 export {
   logo,
@@ -85,5 +86,6 @@ export {
   erik_v_kr,
   bridges_games,
   bridges,
-  mario_galaxy
+  mario_galaxy,
+  webgl_path,
 };

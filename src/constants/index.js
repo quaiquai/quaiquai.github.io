@@ -32,7 +32,8 @@ import {
   erik_v_kr,
   bridges_games,
   bridges,
-  mario_galaxy
+  mario_galaxy,
+  webgl_path
 } from "../assets";
 
 export const navLinks = [
@@ -379,7 +380,7 @@ const projects = [
     source_code_link: "https://github.com/quaiquai/Retro-3D-Engine",
   },
   {
-    name: "Small WebGL 3D Engine",
+    name: "WebGL Path Tracing",
     position: "Web Graphics Developer",
     description: "Small WebGL engine in the making. A lightweight 3D graphics engine built for web browsers using WebGL, focusing on performance and ease of use for web-based 3D applications.",
     tags: [
@@ -388,7 +389,7 @@ const projects = [
       { name: "3D Graphics", color: "pink-text-gradient" },
       { name: "Web Development", color: "blue-text-gradient" },
     ],
-    image: bridges,
+    image: webgl_path,
     source_code_link: "https://github.com/quaiquai/Small-WebGL-3D-Engine",
   },
   {
