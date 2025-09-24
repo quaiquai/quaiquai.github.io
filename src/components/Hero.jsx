@@ -1,15 +1,64 @@
+import React, { useRef, useEffect } from "react";
 import { motion } from "framer-motion";
-import { profile_picture} from "../assets";
+import { profile_picture } from "../assets";
 import { ComputersCanvas } from "./canvas";
 
 const Hero = () => {
+
+  const draggableRef = useRef(null);
+
+  useEffect(() => {
+    const draggableDiv = draggableRef.current;
+    if (!draggableDiv) return;
+
+    let isDragging = false;
+    let offsetX = 0;
+    let offsetY = 0;
+
+    const handleMouseDown = (e) => {
+      isDragging = true;
+      offsetX = e.clientX - draggableDiv.getBoundingClientRect().left;
+      offsetY = e.clientY - draggableDiv.getBoundingClientRect().top;
+      draggableDiv.style.cursor = "grabbing";
+    };
+
+    const handleMouseMove = (e) => {
+      if (!isDragging) return;
+      draggableDiv.style.left = `${e.clientX - offsetX}px`;
+      draggableDiv.style.top = `${e.clientY - offsetY}px`;
+    };
+
+    const handleMouseUp = () => {
+      isDragging = false;
+      draggableDiv.style.cursor = "grab";
+    };
+
+    draggableDiv.addEventListener("mousedown", handleMouseDown);
+    document.addEventListener("mousemove", handleMouseMove);
+    document.addEventListener("mouseup", handleMouseUp);
+
+    return () => {
+      draggableDiv.removeEventListener("mousedown", handleMouseDown);
+      document.removeEventListener("mousemove", handleMouseMove);
+      document.removeEventListener("mouseup", handleMouseUp);
+    };
+  }, []);
+
   return (
-    <div className="win95-window" style={{ 
-      margin: '20px auto',
-      maxWidth: '1200px',
-      marginTop: '10px',
-      overflowY: 'auto',
-    }}>
+    <div
+      id="draggable-hero"
+      ref={draggableRef}
+      className="win95-window"
+      style={{
+        position: "relative",   // <-- this is key
+        left: "20vw",
+        top: "20vh",
+        maxWidth: "1200px",
+        marginTop: "10px",
+        overflowY: "auto",
+        cursor: "grab",        // <-- start with grab cursor
+      }}
+    >
       <div className="win95-title-bar">
         <div style={{ display: 'flex', alignItems: 'center', gap: '4px' }}>
           <span>🏠</span>
@@ -20,7 +69,7 @@ const Hero = () => {
           <button className="win95-close-button">✕</button>
         </div>
       </div>
-      
+
       <div className="win95-window-inner" style={{ padding: '8px' }}>
         {/* Menu Bar */}
         <div style={{
@@ -38,7 +87,7 @@ const Hero = () => {
         </div>
 
         {/* Content Area */}
-        <div className="win95-inset" style={{ 
+        <div className="win95-inset" style={{
           minHeight: '500px',
           position: 'relative',
           overflow: 'hidden'
@@ -63,8 +112,8 @@ const Hero = () => {
                   padding: '4px',
                   background: 'white'
                 }}>
-                  <img 
-                    src={profile_picture} 
+                  <img
+                    src={profile_picture}
                     alt="Matthew McQuaigue"
                     style={{
                       width: '100%',
@@ -75,7 +124,7 @@ const Hero = () => {
                   />
                 </div>
               )}
-              
+
               <div>
                 <h1 style={{
                   fontSize: '24px',
@@ -93,9 +142,9 @@ const Hero = () => {
                   marginTop: '8px'
                 }}>
                   <p className="win95-text">
-                    <strong>Name:</strong> Matthew McQuaigue<br/>
-                    <strong>Title:</strong> 3D Graphics Developer<br/>
-                    <strong>Specialties:</strong> WebGL, Three.js, AR/VR<br/>
+                    <strong>Name:</strong> Matthew McQuaigue<br />
+                    <strong>Title:</strong> 3D Graphics Developer<br />
+                    <strong>Specialties:</strong> WebGL, Three.js, AR/VR<br />
                     <strong>Status:</strong> <span style={{ color: 'green' }}>● Online</span>
                   </p>
                 </div>

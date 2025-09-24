@@ -43,6 +43,9 @@ body {
   display: block;
 }
 
+#draggable-hero {
+  cursor: grab;
+}
 
 /* Windows 95 Window Styles */
 .win95-window {
