@@ -1,5 +1,5 @@
 @import url("https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;300;400;500;600;700;800;900&display=swap");
-
+@import url("https://fonts.googleapis.com/css2?family=VT323&display=swap");
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
@@ -8,15 +8,261 @@
   margin: 0;
   padding: 0;
   box-sizing: border-box;
-  font-family: "Poppins", sans-serif;
+  font-family: "MS Sans Serif", "VT323", monospace;
   scroll-behavior: smooth;
-  color-scheme: dark;
+  image-rendering: pixelated;
+  image-rendering: -moz-crisp-edges;
+  image-rendering: crisp-edges;
 }
 
+:root {
+  --win95-gray: #c0c0c0;
+  --win95-dark-gray: #808080;
+  --win95-light-gray: #dfdfdf;
+  --win95-white: #ffffff;
+  --win95-black: #000000;
+  --win95-blue: #000080;
+  --win95-teal: #008080;
+  --win95-highlight: #0000ff;
+}
+
+body {
+  background: var(--win95-teal);
+  background-image: 
+    repeating-linear-gradient(
+      0deg,
+      transparent,
+      transparent 2px,
+      rgba(0, 0, 0, 0.1) 2px,
+      rgba(0, 0, 0, 0.1) 4px
+    );
+}
 .hash-span {
   margin-top: -100px;
   padding-bottom: 100px;
   display: block;
+}
+
+
+/* Windows 95 Window Styles */
+.win95-window {
+  background: var(--win95-gray);
+  border: 2px solid;
+  border-color: var(--win95-white) var(--win95-black) var(--win95-black) var(--win95-white);
+  box-shadow: 
+    inset -1px -1px 0 var(--win95-dark-gray),
+    inset 1px 1px 0 var(--win95-light-gray),
+    2px 2px 0 rgba(0, 0, 0, 0.25);
+  max-height: 80vh;
+  overflow-y: 'auto';
+}
+
+.win95-window-inner {
+  border: 2px solid;
+  border-color: var(--win95-dark-gray) var(--win95-light-gray) var(--win95-light-gray) var(--win95-dark-gray);
+}
+
+.win95-title-bar {
+  background: linear-gradient(90deg, var(--win95-blue) 0%, var(--win95-highlight) 100%);
+  color: white;
+  padding: 2px 4px;
+  font-weight: bold;
+  font-size: 14px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  user-select: none;
+}
+
+.win95-title-bar-inactive {
+  background: var(--win95-dark-gray);
+}
+
+.win95-button {
+  background: var(--win95-gray);
+  border: 2px solid;
+  border-color: var(--win95-light-gray) var(--win95-black) var(--win95-black) var(--win95-light-gray);
+  padding: 4px 12px;
+  font-size: 14px;
+  cursor: pointer;
+  user-select: none;
+  outline: none;
+  box-shadow: 
+    inset -1px -1px 0 var(--win95-dark-gray),
+    inset 1px 1px 0 var(--win95-white);
+}
+
+.win95-button:active {
+  border-color: var(--win95-black) var(--win95-light-gray) var(--win95-light-gray) var(--win95-black);
+  box-shadow: 
+    inset -1px -1px 0 var(--win95-white),
+    inset 1px 1px 0 var(--win95-dark-gray);
+  padding: 5px 11px 3px 13px;
+}
+
+.win95-button:focus {
+  outline: 1px dotted var(--win95-black);
+  outline-offset: -4px;
+}
+
+.win95-close-button {
+  width: 16px;
+  height: 14px;
+  background: var(--win95-gray);
+  border: 2px solid;
+  border-color: var(--win95-light-gray) var(--win95-black) var(--win95-black) var(--win95-light-gray);
+  font-size: 10px;
+  font-weight: bold;
+  padding: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  margin-left: 2px;
+}
+
+.win95-minimize-button {
+  width: 16px;
+  height: 14px;
+  background: var(--win95-gray);
+  border: 2px solid;
+  border-color: var(--win95-light-gray) var(--win95-black) var(--win95-black) var(--win95-light-gray);
+  font-size: 10px;
+  font-weight: bold;
+  padding: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+}
+
+.win95-taskbar {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 28px;
+  background: var(--win95-gray);
+  border-top: 2px solid var(--win95-light-gray);
+  display: flex;
+  align-items: center;
+  padding: 2px;
+  z-index: 9999;
+}
+
+.win95-start-button {
+  background: var(--win95-gray);
+  border: 2px solid;
+  border-color: var(--win95-light-gray) var(--win95-black) var(--win95-black) var(--win95-light-gray);
+  padding: 2px 6px;
+  font-size: 14px;
+  font-weight: bold;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.win95-start-button:active {
+  border-color: var(--win95-black) var(--win95-light-gray) var(--win95-light-gray) var(--win95-black);
+}
+
+.win95-inset {
+  border: 2px solid;
+  border-color: var(--win95-dark-gray) var(--win95-light-gray) var(--win95-light-gray) var(--win95-dark-gray);
+  background: var(--win95-white);
+  padding: 8px;
+}
+
+.win95-menu {
+  background: var(--win95-gray);
+  border: 2px solid;
+  border-color: var(--win95-light-gray) var(--win95-black) var(--win95-black) var(--win95-light-gray);
+  box-shadow: 2px 2px 0 rgba(0, 0, 0, 0.25);
+  padding: 2px;
+}
+
+.win95-menu-item {
+  padding: 4px 20px;
+  cursor: pointer;
+  font-size: 14px;
+  user-select: none;
+}
+
+.win95-menu-item:hover {
+  background: var(--win95-blue);
+  color: white;
+}
+
+.win95-text {
+  color: var(--win95-black);
+  font-size: 14px;
+  line-height: 1.4;
+}
+
+.win95-link {
+  color: var(--win95-blue);
+  text-decoration: underline;
+  cursor: pointer;
+}
+
+.win95-link:hover {
+  color: var(--win95-highlight);
+}
+
+/* Scrollbar Styles */
+::-webkit-scrollbar {
+  width: 16px;
+  height: 16px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--win95-gray);
+  border: 1px solid;
+  border-color: var(--win95-dark-gray) var(--win95-light-gray) var(--win95-light-gray) var(--win95-dark-gray);
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--win95-gray);
+  border: 2px solid;
+  border-color: var(--win95-light-gray) var(--win95-black) var(--win95-black) var(--win95-light-gray);
+}
+
+::-webkit-scrollbar-button {
+  background: var(--win95-gray);
+  border: 2px solid;
+  border-color: var(--win95-light-gray) var(--win95-black) var(--win95-black) var(--win95-light-gray);
+  height: 16px;
+  width: 16px;
+}
+
+/* Desktop Icons */
+.win95-desktop-icon {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+  padding: 8px;
+  cursor: pointer;
+  user-select: none;
+  width: 80px;
+}
+
+.win95-desktop-icon:hover {
+  background: rgba(0, 0, 128, 0.3);
+}
+
+.win95-desktop-icon-image {
+  width: 32px;
+  height: 32px;
+  image-rendering: pixelated;
+}
+
+.win95-desktop-icon-label {
+  color: white;
+  font-size: 11px;
+  text-shadow: 1px 1px 0 black;
+  text-align: center;
 }
 
 .black-gradient {

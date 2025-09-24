@@ -1,121 +1,107 @@
 import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
-
-import { styles } from "../styles";
 import { navLinks } from "../constants";
-import { logo, menu, close, axis_gizmo } from "../assets"; // images
 
-const Navbar = () => {
-  const [active, setActive] = useState("");
-  const [toggle, setToggle] = useState(false);
-  const [scrolled, setScrolled] = useState(false);
-
-  useEffect(() => {
-    const handleScroll = () => {
-      const scrollTop = window.scrollY;
-      if (scrollTop > 100) {
-        setScrolled(true);
-      } else {
-        setScrolled(false);
-        setActive("");
-      }
-    };
-
-    window.addEventListener("scroll", handleScroll);
-
-    const navbarHighlighter = () => {
-      const sections = document.querySelectorAll("section[id]");
-
-      sections.forEach((current) => {
-        const sectionId = current.getAttribute("id");
-        const sectionHeight = current.offsetHeight;
-        const sectionTop =
-          current.getBoundingClientRect().top - sectionHeight * 0.2;
-
-        if (sectionTop < 0 && sectionTop + sectionHeight > 0) {
-          setActive(sectionId);
-        }
-      });
-    };
-
-    window.addEventListener("scroll", navbarHighlighter);
-
-    return () => {
-      window.removeEventListener("scroll", handleScroll);
-      window.removeEventListener("scroll", navbarHighlighter);
-    };
-  }, []);
+const Navbar = ({ activeWindow, setActiveWindow }) => {
+  const [toggle, setToggle] = useState(true);
 
   return (
-    <nav
-      className={`${
-        styles.paddingX
-      } w-full flex items-center py-5 fixed top-0 z-20 ${
-        scrolled ? "bg-primary" : "bg-transparent"
-      }`}
-    >
-      <div className="w-full flex justify-between items-center max-w-7xl mx-auto">
-        {/*home link from clicking logo and name*/}
-        <Link
-          to="/"
-          className="flex items-center gap-2"
-          onClick={() => {
-            window.scrollTo(0, 0);
+    <>
+      {/* Start Menu */}
+      {(
+        <div 
+          className="win95-menu"
+          style={{
+            position: 'fixed',
+            bottom: '32px',
+            left: '2px',
+            height: '95%',
+            width: '200px',
+            zIndex: 1000,
+            background: '#c0c0c0',
+            border: '2px solid',
+            borderColor: '#ffffff #000000 #000000 #ffffff',
+            boxShadow: '2px 2px 0 rgba(0, 0, 0, 0.25)'
           }}
         >
-          <img src={axis_gizmo} alt="logo" className="w-9 h-9 object-contain" />
-          <p className="text-white text-[18px] font-bold cursor-pointer flex ">
-            Matthew McQuaigue &nbsp;
-          </p>
-        </Link>
-
-        {/* navbar links to different pages i.e: about, contact etc   */}
-        <ul className="list-none hidden sm:flex flex-row gap-10">
-          {navLinks.map((nav) => (
-            <li
-              key={nav.id}
-              className={`${
-                "text-white"
-              } hover:underline hover:text-[25px] text-[18px] font-medium cursor-pointer`}
-            >
-              {/* <a href={`/#${nav.id}`}>{nav.title}</a> */}
-              <Link to={`/${nav.id}`}>{nav.title}</Link>
-            </li>
-          ))}
-        </ul>
-
-        <div className="sm:hidden flex flex-1 justify-end items-center">
-          <img
-            src={toggle ? close : menu}
-            alt="menu"
-            className="w-[28px] h-[28px] object-contain"
-            onClick={() => setToggle(!toggle)}
-          />
-
-          <div
-            className={`${
-              !toggle ? "hidden" : "flex"
-            } p-6 black-gradient absolute top-20 right-0 mx-4 my-2 min-w-[140px] z-10 rounded-xl`}
-          >
-            <ul className="list-none flex justify-end items-start flex-1 flex-col gap-4">
-              {navLinks.map((nav) => (
-                <li
-                  key={nav.id}
-                  className={`font-poppins font-medium cursor-pointer text-[16px] ${
-                    active === nav.id ? "text-white" : "text-secondary"
-                  }`}
-                  onClick={() => {
-                    setToggle(!toggle);
-                  }}
-                >
-                  <a href={`/${nav.id}`}>{nav.title}</a>
-                </li>
-              ))}
-            </ul>
+          <div style={{ 
+            background: '#000080',
+            color: 'white',
+            padding: '4px 8px',
+            marginBottom: '2px',
+            display: 'flex',
+            alignItems: 'center',
+            gap: '8px'
+          }}>
+            <span style={{ 
+              writingMode: 'vertical-lr',
+              transform: 'rotate(180deg)',
+              fontSize: '18px',
+              fontWeight: 'bold'
+            }}>
+              Portfolio 95
+            </span>
           </div>
+          
+          {navLinks.map((nav) => (
+            <Link 
+              key={nav.id}
+              to={`/${nav.id}`}
+              onClick={() => {
+                setToggle(false);
+                setActiveWindow(nav.id);
+              }}
+            >
+              <div className="win95-menu-item">
+                <span style={{ marginRight: '8px' }}>📁</span>
+                {nav.title}
+              </div>
+            </Link>
+          ))}
+          
+          <div style={{ 
+            borderTop: '2px solid',
+            borderColor: '#808080 #ffffff #ffffff #808080',
+            margin: '2px 0'
+          }}></div>
+          
+          <Link to="/" onClick={() => {
+            setToggle(false);
+            setActiveWindow('home');
+          }}>
+            <div className="win95-menu-item">
+              <span style={{ marginRight: '8px' }}>🏠</span>
+              Home
+            </div>
+          </Link>
         </div>
+      )}
+
+      {/* Mobile Menu Button (Floating) */}
+      <div 
+        className="sm:hidden"
+        style={{
+          position: 'fixed',
+          bottom: '36px',
+          left: '4px',
+          zIndex: 999
+        }}
+      >
+        <button 
+          className="win95-start-button"
+          onClick={() => setToggle(!toggle)}
+          style={{
+            display: 'flex',
+            alignItems: 'center',
+            gap: '4px',
+            padding: '4px 8px'
+          }}
+        >
+          <span style={{ fontSize: '16px' }}>🪟</span>
+          <span style={{ fontWeight: 'bold' }}>Start</span>
+        </button>
       </div>
-    </nav>
+    </>
   );
 };
 

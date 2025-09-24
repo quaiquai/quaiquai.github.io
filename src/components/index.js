@@ -10,6 +10,8 @@ import Publications from "./Publications";
 import ReactWebGPUTutorial from './ReactWebGPUTutorial';
 import ResourceView from './ResourceView';
 import BlogsList from './Blogs';
+import Win95Desktop from './Win95Desktop';
+import Win95Taskbar from './Win95Taskbar';
 
 
 export {
@@ -26,4 +28,6 @@ export {
   ResourceView,
   // Test,
   BlogsList,
+  Win95Desktop,
+  Win95Taskbar
 };
