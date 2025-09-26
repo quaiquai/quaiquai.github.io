@@ -26,7 +26,7 @@ const App = () => {
     <div className="win95-desktop">
       <Win95Desktop setActiveWindow={setActiveWindow} setOpenWindows={setOpenWindows} />
 
-      <div style={{ padding: '20px', paddingBottom: '50px' }}>
+      <div className="flicker-wrapper" style={{ padding: '20px', paddingBottom: '50px' }}>
         {/* <Navbar activeWindow={activeWindow} setActiveWindow={setActiveWindow} /> */}
 
         <Routes>

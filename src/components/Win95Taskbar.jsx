@@ -149,16 +149,7 @@ const Win95Taskbar = ({ activeWindow }) => {
 
             {/* Taskbar */}
             <div className="win95-taskbar" style={{
-                position: 'fixed',
-                bottom: 0,
-                left: 0,
-                right: 0,
-                height: '28px',
-                background: '#c0c0c0',
-                borderTop: '2px solid #ffffff',
-                display: 'flex',
-                alignItems: 'center',
-                padding: '2px',
+
                 zIndex: 9999,
                 justifyContent: 'space-between'
             }}>

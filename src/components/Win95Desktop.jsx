@@ -12,7 +12,6 @@ const Win95Desktop = ({ setActiveWindow, setOpenWindows }) => {
         { id: 'resources', icon: '💿', label: 'Resources', path: '/resources' },
         { id: 'wgpu', icon: '🎮', label: '3D Demo', path: '/wgpu' },
         { id: 'recycle', icon: '🗑️', label: 'Recycle Bin', path: '#' },
-        { id: 'network', icon: '🌐', label: 'Network', path: '#' },
     ];
 
     const handleIconClick = (icon) => {
