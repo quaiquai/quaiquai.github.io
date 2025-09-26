@@ -53,7 +53,7 @@ body {
   width: 100%;
   height: 100%; 
   @include fill;
-  z-index: 9999;
+  /* z-index: 9999; */
 }
 
 @keyframes flicker {
@@ -117,7 +117,14 @@ body {
     inset 1px 1px 0 var(--win95-light-gray),
     2px 2px 0 rgba(0, 0, 0, 0.25);
   max-height: 82vh;
+  max-width: 90vw;
   overflow-y: 'auto';
+  /* z-index: 1000000; */
+  /* position: "relative"; */
+  /* maxWidth: "1200px"; */
+  /* marginTop: "10px"; */
+  /* overflowY: "auto"; */
+  /* cursor: "grab"; */
 }
 
 .win95-window-inner {
@@ -169,6 +176,7 @@ body {
 }
 
 .win95-close-button {
+  color: var(--win95-black);
   width: 16px;
   height: 14px;
   background: var(--win95-gray);
@@ -185,6 +193,7 @@ body {
 }
 
 .win95-minimize-button {
+  color: var(--win95-black);
   width: 16px;
   height: 14px;
   background: var(--win95-gray);

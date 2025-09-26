@@ -1,18 +1,19 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
+import { desktopIcons } from '../constants';
 
 const Win95Desktop = ({ setActiveWindow, setOpenWindows }) => {
     const navigate = useNavigate();
 
-    const desktopIcons = [
-        { id: 'about', icon: '👤', label: 'About Me', path: '/about' },
-        { id: 'projects', icon: '💾', label: 'Projects', path: '/projects' },
-        { id: 'publications', icon: '📄', label: 'Publications', path: '/publications' },
-        { id: 'blogs', icon: '📝', label: 'Blog Posts', path: '/blogs' },
-        { id: 'resources', icon: '💿', label: 'Resources', path: '/resources' },
-        { id: 'wgpu', icon: '🎮', label: '3D Demo', path: '/wgpu' },
-        { id: 'recycle', icon: '🗑️', label: 'Recycle Bin', path: '#' },
-    ];
+    // const desktopIcons = [
+    //     { id: 'about', icon: '👤', label: 'About Me', path: '/about' },
+    //     { id: 'projects', icon: '💾', label: 'Projects', path: '/projects' },
+    //     { id: 'publications', icon: '📄', label: 'Publications', path: '/publications' },
+    //     { id: 'blogs', icon: '📝', label: 'Blog Posts', path: '/blogs' },
+    //     { id: 'resources', icon: '💿', label: 'Resources', path: '/resources' },
+    //     { id: 'wgpu', icon: '🎮', label: '3D Demo', path: '/wgpu' },
+    //     { id: 'recycle', icon: '🗑️', label: 'Recycle Bin', path: '#' },
+    // ];
 
     const handleIconClick = (icon) => {
         if (icon.path !== '#') {
@@ -37,7 +38,8 @@ const Win95Desktop = ({ setActiveWindow, setOpenWindows }) => {
             gap: '20px',
             zIndex: 1,
             height: 'calc(100vh - 60px)',
-            pointerEvents: 'none'
+            pointerEvents: 'none',
+            zIndex: 1,
         }}>
             {desktopIcons.map((icon) => (
                 <div
@@ -55,7 +57,8 @@ const Win95Desktop = ({ setActiveWindow, setOpenWindows }) => {
                         width: '80px',
                         height: '80px',
                         userSelect: 'none',
-                        pointerEvents: 'auto'
+                        pointerEvents: 'auto',
+                        zIndex: 0,
                     }}
                     onMouseDown={(e) => {
                         e.currentTarget.style.background = 'rgba(0, 0, 128, 0.3)';
@@ -71,7 +74,7 @@ const Win95Desktop = ({ setActiveWindow, setOpenWindows }) => {
                         fontSize: '32px',
                         filter: 'drop-shadow(1px 1px 0 black)'
                     }}>
-                        {icon.icon}
+                        <img src={icon.icon}/>
                     </div>
                     <span style={{
                         color: 'white',

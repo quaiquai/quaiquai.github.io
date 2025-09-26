@@ -2,57 +2,18 @@ import React, { useRef, useEffect } from "react";
 import { motion } from "framer-motion";
 import { profile_picture } from "../assets";
 import { ComputersCanvas } from "./canvas";
+import { useDraggable } from "../hooks/useDraggable";
+import { use } from "react";
 
 const Hero = () => {
-
-  const draggableRef = useRef(null);
-
-  useEffect(() => {
-    const draggableDiv = draggableRef.current;
-    if (!draggableDiv) return;
-
-    let isDragging = false;
-    let offsetX = 0;
-    let offsetY = 0;
-
-    const handleMouseDown = (e) => {
-      isDragging = true;
-      offsetX = e.clientX - draggableDiv.getBoundingClientRect().left;
-      offsetY = e.clientY - draggableDiv.getBoundingClientRect().top;
-      draggableDiv.style.cursor = "grabbing";
-    };
-
-    const handleMouseMove = (e) => {
-      if (!isDragging) return;
-      draggableDiv.style.left = `${e.clientX - offsetX}px`;
-      draggableDiv.style.top = `${e.clientY - offsetY}px`;
-    };
-
-    const handleMouseUp = () => {
-      isDragging = false;
-      draggableDiv.style.cursor = "grab";
-    };
-
-    draggableDiv.addEventListener("mousedown", handleMouseDown);
-    document.addEventListener("mousemove", handleMouseMove);
-    document.addEventListener("mouseup", handleMouseUp);
-
-    return () => {
-      draggableDiv.removeEventListener("mousedown", handleMouseDown);
-      document.removeEventListener("mousemove", handleMouseMove);
-      document.removeEventListener("mouseup", handleMouseUp);
-    };
-  }, []);
+  const draggableRef = useDraggable(20, 0);
 
   return (
     <div
-      id="draggable-hero"
       ref={draggableRef}
       className="win95-window"
       style={{
         position: "relative",   // <-- this is key
-        left: "20vw",
-        top: "20vh",
         maxWidth: "1200px",
         marginTop: "10px",
         overflowY: "auto",
@@ -150,51 +111,6 @@ const Hero = () => {
                 </div>
               </div>
             </div>
-
-            {/* Desktop Icons */}
-            {/* <div style={{
-              display: 'flex',
-              flexWrap: 'wrap',
-              gap: '20px',
-              marginTop: '30px'
-            }}>
-              <div className="win95-desktop-icon" style={{ 
-                background: '#c0c0c0',
-                border: '2px solid',
-                borderColor: '#ffffff #808080 #808080 #ffffff',
-                padding: '8px',
-                textAlign: 'center',
-                cursor: 'pointer'
-              }}>
-                <div style={{ fontSize: '32px' }}>💻</div>
-                <span style={{ fontSize: '12px' }}>My Computer</span>
-              </div>
-              
-              <div className="win95-desktop-icon" style={{ 
-                background: '#c0c0c0',
-                border: '2px solid',
-                borderColor: '#ffffff #808080 #808080 #ffffff',
-                padding: '8px',
-                textAlign: 'center',
-                cursor: 'pointer'
-              }}>
-                <div style={{ fontSize: '32px' }}>🌐</div>
-                <span style={{ fontSize: '12px' }}>Internet Explorer</span>
-              </div>
-              
-              <div className="win95-desktop-icon" style={{ 
-                background: '#c0c0c0',
-                border: '2px solid',
-                borderColor: '#ffffff #808080 #808080 #ffffff',
-                padding: '8px',
-                textAlign: 'center',
-                cursor: 'pointer'
-              }}>
-                <div style={{ fontSize: '32px' }}>📁</div>
-                <span style={{ fontSize: '12px' }}>My Documents</span>
-              </div>
-            </div> */}
-
             {/* 3D Canvas Container */}
             <div style={{
               marginTop: '20px',

@@ -30,6 +30,7 @@ import {
 
 import { publications } from "./Publications_Constants";
 import { projects } from "./Projects_Constants";
+import { desktopIcons } from "./DesktopConstants";
 
 export const navLinks = [
   {
@@ -202,4 +203,4 @@ const blogs = [
   }
 ]
 
-export { services, technologies, experiences, projects, publications, blogs };
+export { services, technologies, experiences, projects, publications, blogs, desktopIcons };
