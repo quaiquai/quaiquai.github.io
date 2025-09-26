@@ -20,23 +20,13 @@ import Win95Taskbar from "./components/Win95Taskbar";
 const App = () => {
   const canvasRef = useRef();
   const [activeWindow, setActiveWindow] = useState('home');
-
+  const [openWindows, setOpenWindows] = useState(['home']);
+  
   return (
-    <div className="win95-desktop" style={{
-      minHeight: '100vh',
-      background: '#008080',
-      backgroundImage: `repeating-linear-gradient(
-        0deg,
-        transparent,
-        transparent 2px,
-        rgba(0, 0, 0, 0.1) 2px,
-        rgba(0, 0, 0, 0.1) 4px
-      )`,
-      paddingBottom: '32px',
-    }}>
-      <Win95Desktop setActiveWindow={setActiveWindow} />
+    <div className="win95-desktop">
+      <Win95Desktop setActiveWindow={setActiveWindow} setOpenWindows={setOpenWindows} />
 
-      <div style={{ padding: '20px', paddingBottom: '50px'}}>
+      <div style={{ padding: '20px', paddingBottom: '50px' }}>
         {/* <Navbar activeWindow={activeWindow} setActiveWindow={setActiveWindow} /> */}
 
         <Routes>

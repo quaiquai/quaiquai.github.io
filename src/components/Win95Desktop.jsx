@@ -1,7 +1,7 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
 
-const Win95Desktop = ({ setActiveWindow }) => {
+const Win95Desktop = ({ setActiveWindow, setOpenWindows }) => {
     const navigate = useNavigate();
 
     const desktopIcons = [
@@ -18,6 +18,12 @@ const Win95Desktop = ({ setActiveWindow }) => {
     const handleIconClick = (icon) => {
         if (icon.path !== '#') {
             setActiveWindow(icon.id);
+            setOpenWindows(prev => {
+                if (!prev.includes(icon.id)) {
+                    return [...prev, icon.id];
+                }
+                return prev;
+            })
             navigate(icon.path);
         }
     };
